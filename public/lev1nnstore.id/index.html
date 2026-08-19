@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MLBB Joki Store – Rank Up Cepat & Aman</title>
+  <link rel="icon" type="image/png" href="myicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #07080f;
+      --surface:  #0f1120;
+      --card:     #141828;
+      --border:   #1e2540;
+      --blue:     #3b82f6;
+      --blue-dim: #1d4ed8;
+      --gold:     #f5c518;
+      --gold-dim: #b8920e;
+      --text:     #e8eaf0;
+      --muted:    #6b7280;
+      --danger:   #ef4444;
+      --success:  #22c55e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+      height: 64px;
+      background: rgba(7,8,15,.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .logo span { color: var(--blue); }
+    nav ul { list-style: none; display: flex; gap: 2rem; }
+    nav ul a {
+      color: var(--muted); text-decoration: none;
+      font-size: .9rem; font-weight: 500;
+      transition: color .2s;
+    }
+    nav ul a:hover { color: var(--text); }
+    .btn-nav {
+      background: var(--gold);
+      color: #000;
+      padding: .45rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: .85rem;
+      text-decoration: none;
+      transition: background .2s;
+    }
+    .btn-nav:hover { background: var(--gold-dim); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 4rem 5vw;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 0%, rgba(59,130,246,.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(245,197,24,.08) 0%, transparent 60%),
+        var(--bg);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231e2540' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: .4;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(59,130,246,.15);
+      border: 1px solid rgba(59,130,246,.3);
+      color: var(--blue);
+      padding: .3rem .9rem;
+      border-radius: 999px;
+      font-size: .8rem; font-weight: 600;
+      letter-spacing: .5px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 .accent { color: var(--gold); }
+    .hero p {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      padding: .8rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background .2s, transform .1s;
+    }
+    .btn-primary:hover { background: var(--blue-dim); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: .8rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--blue); background: rgba(59,130,246,.07); }
+    .stats {
+      display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;
+      margin-top: 4rem; position: relative;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-item .label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
+
+    /* ── SECTION WRAPPER ── */
+    section { padding: 5rem 5vw; }
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 3rem; font-size: .95rem; }
+
+    /* ── LAYANAN ── */
+    #layanan { background: var(--surface); }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: border-color .25s, transform .2s;
+      position: relative; overflow: hidden;
+    }
+    .card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+      opacity: 0; transition: opacity .25s;
+    }
+    .card:hover { border-color: var(--blue); transform: translateY(-4px); }
+    .card:hover::after { opacity: 1; }
+    .card-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.25rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .card p { color: var(--muted); font-size: .88rem; line-height: 1.6; margin-bottom: 1.2rem; }
+    .card-price {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--gold);
+    }
+    .card-price span { font-size: .8rem; color: var(--muted); font-family: 'Inter', sans-serif; font-weight: 400; }
+
+    /* ── PAKET RANK ── */
+    #paket {}
+    .rank-table {
+      width: 100%; border-collapse: collapse;
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .rank-table thead { background: var(--card); }
+    .rank-table th {
+      padding: 1rem 1.25rem; text-align: left;
+      font-size: .85rem; color: var(--muted); font-weight: 600;
+    }
+    .rank-table tbody tr {
+      border-top: 1px solid var(--border);
+      transition: background .15s;
+    }
+    .rank-table tbody tr:hover { background: var(--card); }
+    .rank-table td { padding: 1rem 1.25rem; font-size: .9rem; }
+    .rank-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-weight: 600; font-size: .9rem;
+    }
+    .tag-hot {
+      background: rgba(239,68,68,.15);
+      color: var(--danger);
+      border: 1px solid rgba(239,68,68,.3);
+      padding: .15rem .5rem; border-radius: 4px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .tag-best {
+      background: rgba(245,197,24,.12);
+      color: var(--gold);
+      border: 1px solid rgba(245,197,24,.3);
+      padding: .15rem .5rem; border-radius: 4px;
+      font-size: .72rem; font-weight: 700;
+    }
+    .btn-order {
+      display: inline-block;
+      background: transparent;
+      border: 1px solid var(--blue);
+      color: var(--blue);
+      padding: .35rem .9rem;
+      border-radius: 6px;
+      font-size: .8rem; font-weight: 600;
+      cursor: pointer; transition: background .2s, color .2s;
+      text-decoration: none;
+    }
+    .btn-order:hover { background: var(--blue); color: #fff; }
+
+    /* ── CARA ORDER ── */
+    #cara-order { background: var(--surface); }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      text-align: center;
+    }
+    .step-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 3rem; font-weight: 700;
+      color: rgba(59,130,246,.25);
+      line-height: 1;
+      margin-bottom: .75rem;
+    }
+    .step h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .step p { color: var(--muted); font-size: .85rem; line-height: 1.6; }
+
+    /* ── TESTIMONI ── */
+    #testimoni {}
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: .75rem; }
+    .testi-text { color: var(--muted); font-size: .88rem; line-height: 1.6; margin-bottom: 1rem; }
+    .testi-user { display: flex; align-items: center; gap: .75rem; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .85rem;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dim));
+      color: #fff; flex-shrink: 0;
+    }
+    .testi-name { font-weight: 600; font-size: .88rem; }
+    .testi-rank { color: var(--muted); font-size: .78rem; }
+
+    /* ── ORDER FORM ── */
+    #order { background: var(--surface); }
+    .form-box {
+      max-width: 600px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: .5rem; color: var(--text); }
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: .7rem 1rem;
+      font-size: .9rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--blue); }
+    select option { background: var(--card); }
+    textarea { resize: vertical; min-height: 90px; }
+    .btn-submit {
+      width: 100%;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      padding: .9rem;
+      border-radius: 8px;
+      font-size: 1rem; font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+      font-family: 'Rajdhani', sans-serif;
+      letter-spacing: .5px;
+    }
+    .btn-submit:hover { background: var(--blue-dim); }
+    .form-note { color: var(--muted); font-size: .8rem; margin-top: .75rem; text-align: center; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 5vw;
+      display: flex; flex-wrap: wrap;
+      gap: 2rem; justify-content: space-between;
+    }
+    .footer-brand .logo { font-size: 1.4rem; }
+    .footer-brand p { color: var(--muted); font-size: .85rem; margin-top: .5rem; max-width: 280px; line-height: 1.6; }
+    .footer-col h4 { font-weight: 700; margin-bottom: 1rem; font-size: .95rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+    .footer-col ul a { color: var(--muted); text-decoration: none; font-size: .85rem; transition: color .2s; }
+    .footer-col ul a:hover { color: var(--text); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 1.5rem 5vw;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    /* ── WA FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 200;
+      background: #25d366;
+      color: #fff;
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,.4);
+      text-decoration: none;
+      transition: transform .2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: var(--success);
+      color: #fff;
+      padding: .75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600; font-size: .9rem;
+      opacity: 0; transition: all .4s;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex; gap: .5rem; flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .tab-btn {
+      padding: .55rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: .88rem; font-weight: 600;
+      cursor: pointer; transition: all .2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .tab-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── KALKULATOR RANK ── */
+    #kalkulator { background: var(--surface); }
+    .calc-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 640px;
+    }
+    .calc-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .calc-result {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+    .calc-result.show { display: block; }
+    .result-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-row .val { font-weight: 700; color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; }
+    .result-label { color: var(--muted); }
+
+    /* ── DIAMOND PRICES ── */
+    #topup { }
+    .diamond-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .diamond-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s, background .2s;
+      position: relative;
+    }
+    .diamond-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .diamond-card.selected { border-color: var(--gold); background: rgba(245,197,24,.06); }
+    .diamond-card .dm-icon { font-size: 1.8rem; margin-bottom: .4rem; }
+    .diamond-card .dm-amt {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: .25rem;
+    }
+    .diamond-card .dm-price { color: var(--gold); font-size: .88rem; font-weight: 700; }
+    .diamond-card .dm-ori { color: var(--muted); font-size: .72rem; text-decoration: line-through; }
+    .diamond-card .dm-badge {
+      position: absolute; top: -8px; right: -8px;
+      background: var(--danger);
+      color: #fff;
+      font-size: .65rem; font-weight: 700;
+      padding: .15rem .4rem; border-radius: 4px;
+    }
+    .dm-bonus { background: rgba(34,197,94,.1); border-color: rgba(34,197,94,.3); color: var(--success); }
+
+    /* ── TOP UP FORM ── */
+    .topup-wrapper {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+      align-items: start;
+    }
+    @media (max-width: 700px) { .topup-wrapper { grid-template-columns: 1fr; } }
+    .topup-summary {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      position: sticky; top: 80px;
+    }
+    .topup-summary h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      margin-bottom: 1.25rem;
+      padding-bottom: .75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .summary-row {
+      display: flex; justify-content: space-between;
+      font-size: .88rem; padding: .45rem 0;
+      color: var(--muted);
+    }
+    .summary-row .s-val { color: var(--text); font-weight: 600; }
+    .summary-total {
+      display: flex; justify-content: space-between;
+      font-size: 1rem; padding: .75rem 0 0;
+      margin-top: .5rem;
+      border-top: 1px solid var(--border);
+      font-weight: 700;
+    }
+    .summary-total .t-val { color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; }
+    .empty-summary { color: var(--muted); font-size: .85rem; text-align: center; padding: 1rem 0; }
+
+    /* Payment methods */
+    .payment-methods {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem;
+      margin: 1rem 0;
+    }
+    .pay-btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: 8px;
+      padding: .5rem .3rem;
+      text-align: center;
+      font-size: .75rem; font-weight: 600;
+      cursor: pointer; transition: border-color .2s, background .2s;
+    }
+    .pay-btn:hover { border-color: var(--blue); }
+    .pay-btn.selected { border-color: var(--gold); background: rgba(245,197,24,.06); color: var(--gold); }
+    .pay-icon { font-size: 1.1rem; display: block; margin-bottom: .2rem; }
+
+    /* Steps indicator */
+    .step-indicator {
+      display: flex; align-items: center; gap: 0;
+      margin-bottom: 2rem;
+    }
+    .si-step {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .8rem; font-weight: 600;
+    }
+    .si-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--border); color: var(--muted);
+      font-size: .78rem; font-weight: 700; flex-shrink: 0;
+      transition: background .3s, color .3s;
+    }
+    .si-step.done .si-num { background: var(--success); color: #fff; }
+    .si-step.active .si-num { background: var(--blue); color: #fff; }
+    .si-line { flex: 1; height: 2px; background: var(--border); margin: 0 .5rem; min-width: 20px; }
+    .si-label { color: var(--muted); }
+    .si-step.active .si-label { color: var(--text); }
+    .si-step.done .si-label { color: var(--success); }
+
+    /* Confirm screen */
+    .confirm-screen {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      display: none;
+    }
+    .confirm-screen.show { display: block; }
+    .confirm-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .confirm-screen h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.5rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .confirm-screen p { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; }
+    .confirm-detail {
+      background: var(--surface);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      margin: 1rem 0 1.5rem;
+      text-align: left;
+    }
+
+    @media (max-width: 640px) {
+      nav ul { display: none; }
+      .form-box { padding: 1.5rem; }
+      footer { flex-direction: column; }
+      .calc-row { grid-template-columns: 1fr; }
+      .diamond-grid { grid-template-columns: repeat(3, 1fr); }
+      .payment-methods { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo">lev1nn<span>store</span>.id</div>
+  <ul>
+    <li><a href="#layanan">Layanan</a></li>
+    <li><a href="#kalkulator">Kalkulator</a></li>
+    <li><a href="#topup">Top Up 💎</a></li>
+    <li><a href="#testimoni">Testimoni</a></li>
+  </ul>
+  <a href="#topup" class="btn-nav">Top Up Sekarang</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">⚡ Terpercaya & Profesional</div>
+  <h1>Rank Up MLBB<br>Cepat &amp; <span class="accent">Aman</span></h1>
+  <p>Layanan joki Mobile Legends terpercaya. Booster berpengalaman, akun aman, harga terjangkau, selesai dalam 1–3 hari.</p>
+  <div class="hero-btns">
+    <a href="#order" class="btn-primary">🎮 Order Sekarang</a>
+    <a href="#layanan" class="btn-outline">Lihat Layanan</a>
+  </div>
+  <div class="stats">
+    <div class="stat-item"><div class="num">5.200+</div><div class="label">Pesanan Selesai</div></div>
+    <div class="stat-item"><div class="num">4.9★</div><div class="label">Rating Rata-rata</div></div>
+    <div class="stat-item"><div class="num">100%</div><div class="label">Akun Aman</div></div>
+    <div class="stat-item"><div class="num">24/7</div><div class="label">Support Aktif</div></div>
+  </div>
+</section>
+
+<!-- LAYANAN -->
+<section id="layanan">
+  <div class="section-title">Layanan Kami</div>
+  <div class="section-sub">Semua kebutuhan rank-up kamu tersedia di sini</div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-icon">🏆</div>
+      <h3>Joki Rank</h3>
+      <p>Naik rank dari tier mana pun sampai tujuanmu. Booster kami rata-rata rank Mythic Glory.</p>
+      <div class="card-price">Mulai <span>dari</span> Rp 15.000</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⭐</div>
+      <h3>Winstreak</h3>
+      <p>Butuh win berturut-turut untuk naik bintang? Kami handle sampai target tercapai.</p>
+      <div class="card-price">Mulai <span>dari</span> Rp 8.000</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💎</div>
+      <h3>Top Up Diamond</h3>
+      <p>Top up diamond MLBB harga murah, proses cepat via server lokal. No delay.</p>
+      <div class="card-price">Mulai <span>dari</span> Rp 1.500</div>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎯</div>
+      <h3>Push MMR</h3>
+      <p>Tingkatkan MMR kamu secara konsisten dengan strategi draft yang terukur.</p>
+      <div class="card-price">Mulai <span>dari</span> Rp 25.000</div>
+    </div>
+  </div>
+</section>
+
+<!-- PAKET RANK -->
+<section id="paket">
+  <div class="section-title">Daftar Harga Joki Rank</div>
+  <div class="section-sub">Harga per tier · update Juni 2025</div>
+  <div style="overflow-x:auto;">
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th>Dari Rank</th>
+          <th>Ke Rank</th>
+          <th>Estimasi</th>
+          <th>Harga</th>
+          <th>Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank-badge"><img src="grandmaster.png" width="28" style="vertical-align:middle;margin-right:4px"> Grandmaster</span></td>
+          <td><span class="rank-badge"><img src="epic.png" width="28" style="vertical-align:middle;margin-right:4px"> Epic</span> <span class="tag-hot">HOT</span></td>
+          <td>1–2 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 65.000</td>
+          <td><a href="#order" class="btn-order">Pesan</a></td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge"><img src="epic.png" width="28" style="vertical-align:middle;margin-right:4px"> Epic</span></td>
+          <td><span class="rank-badge"><img src="legend.png" width="28" style="vertical-align:middle;margin-right:4px"> Legend</span></td>
+          <td>2–3 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 110.000</td>
+          <td><a href="#order" class="btn-order">Pesan</a></td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge"><img src="legend.png" width="28" style="vertical-align:middle;margin-right:4px"> Legend</span></td>
+          <td><span class="rank-badge"><img src="mythic.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic</span> <span class="tag-best">BEST VALUE</span></td>
+          <td>2–3 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 180.000</td>
+          <td><a href="#order" class="btn-order">Pesan</a></td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge"><img src="mythic.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic</span></td>
+          <td><span class="rank-badge"><img src="mythic honor.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Honor</span></td>
+          <td>1–2 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 280.000</td>
+          <td><a href="#order" class="btn-order">Pesan</a></td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge"><img src="mythic honor.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Honor</span></td>
+          <td><span class="rank-badge"><img src="mythic glory.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Glory</span></td>
+          <td>2–3 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 420.000</td>
+          <td><a href="#order" class="btn-order">Pesan</a></td>
+        </tr>
+        <tr>
+          <td><span class="rank-badge"><img src="mythic glory.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Glory</span></td>
+          <td><span class="rank-badge"><img src="mythic immortal.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Immortal</span></td>
+          <td>5–7 hari</td>
+          <td style="color:var(--gold);font-weight:700;">Rp 1.350.000</td>
+          <td><a href="https://wa.me/628159815683" class="btn-order" target="_blank">Chat WA</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TABEL PER BINTANG -->
+  <div style="margin-top:3rem">
+    <div class="section-title" style="font-size:1.6rem">⭐ Joki Per Bintang</div>
+    <div class="section-sub">Mau naik berapa bintang? Hitung sendiri sesuai kebutuhan!</div>
+    <div style="overflow-x:auto;">
+      <table class="rank-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Harga per ⭐</th>
+            <th>Contoh 3 ⭐</th>
+            <th>Contoh 5 ⭐</th>
+            <th>Order</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="rank-badge"><img src="grandmaster.png" width="28" style="vertical-align:middle;margin-right:4px"> Grandmaster</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 4.000/⭐</td>
+            <td style="color:var(--muted);">Rp 12.000</td>
+            <td style="color:var(--muted);">Rp 20.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="epic.png" width="28" style="vertical-align:middle;margin-right:4px"> Epic</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 6.000/⭐</td>
+            <td style="color:var(--muted);">Rp 18.000</td>
+            <td style="color:var(--muted);">Rp 30.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="legend.png" width="28" style="vertical-align:middle;margin-right:4px"> Legend</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 8.000/⭐</td>
+            <td style="color:var(--muted);">Rp 24.000</td>
+            <td style="color:var(--muted);">Rp 40.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="mythic.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 15.000/⭐</td>
+            <td style="color:var(--muted);">Rp 45.000</td>
+            <td style="color:var(--muted);">Rp 75.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="mythic honor.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Honor</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 21.000/⭐</td>
+            <td style="color:var(--muted);">Rp 63.000</td>
+            <td style="color:var(--muted);">Rp 105.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="mythic glory.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Glory</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 27.000/⭐</td>
+            <td style="color:var(--muted);">Rp 81.000</td>
+            <td style="color:var(--muted);">Rp 135.000</td>
+            <td><a href="#order" class="btn-order">Pesan</a></td>
+          </tr>
+          <tr>
+            <td><span class="rank-badge"><img src="mythic immortal.png" width="28" style="vertical-align:middle;margin-right:4px"> Mythic Immortal</span></td>
+            <td style="color:var(--gold);font-weight:700;">Rp 32.000/⭐</td>
+            <td style="color:var(--muted);">Rp 96.000</td>
+            <td style="color:var(--muted);">Rp 160.000</td>
+            <td><a href="https://wa.me/628159815683" class="btn-order" target="_blank">Chat WA</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:.75rem">* Harga dihitung per bintang. Cantumkan jumlah bintang yang diinginkan saat order.</p>
+  </div>
+</section>
+
+<!-- CARA ORDER -->
+<section id="cara-order">
+  <div class="section-title">Cara Order</div>
+  <div class="section-sub">Mudah, cepat, dan aman dalam 4 langkah</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Pilih Paket</h3>
+      <p>Pilih layanan atau paket rank yang sesuai kebutuhanmu dari tabel di atas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Isi Form Order</h3>
+      <p>Lengkapi formulir dengan ID game, rank saat ini, dan target rank tujuan.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Konfirmasi & Bayar</h3>
+      <p>Admin akan menghubungi kamu via WhatsApp untuk konfirmasi dan pembayaran.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Joki Mulai!</h3>
+      <p>Booster kami langsung bekerja. Pantau progress real-time via WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONI -->
+<section id="testimoni">
+  <div class="section-title">Apa Kata Mereka?</div>
+  <div class="section-sub">Ribuan pelanggan sudah merasakan hasilnya</div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Rank naik dari Epic ke Legend dalam 4 hari! Boosternya pro banget, komunikatif, dan akun aman. Recommended!"</p>
+      <div class="testi-user">
+        <div class="avatar">AR</div>
+        <div><div class="testi-name">Aldi Ramadhan</div><div class="testi-rank">Epic → Legend</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Udah 3x order di sini, gak pernah kecewa. Harga paling murah se-Indonesia, hasil maksimal. Gas terus!"</p>
+      <div class="testi-user">
+        <div class="avatar">SN</div>
+        <div><div class="testi-name">Siti Nuraini</div><div class="testi-rank">Master → Grandmaster</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Awalnya ragu, tapi ternyata legit! Admin responsif, booster cepet, dan akun gak kena banned sama sekali."</p>
+      <div class="testi-user">
+        <div class="avatar">DF</div>
+        <div><div class="testi-name">Dicky Firmansyah</div><div class="testi-rank">Legend → Mythic</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★☆</div>
+      <p class="testi-text">"Top up diamond cepat banget, under 5 menit langsung masuk. Harga juga lebih murah dari top up langsung."</p>
+      <div class="testi-user">
+        <div class="avatar">PW</div>
+        <div><div class="testi-name">Putri Wulandari</div><div class="testi-rank">Top Up Diamond</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Gak nyangka bisa Mythic season ini. Tim joki-nya koordinasi bagus. Progress update tiap hari via WA."</p>
+      <div class="testi-user">
+        <div class="avatar">BH</div>
+        <div><div class="testi-name">Bagas Hariyanto</div><div class="testi-rank">Epic → Mythic</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"CS-nya ramah, jelasin semua prosesnya. Bayar juga gampang, bisa QRIS, transfer, semua ada."</p>
+      <div class="testi-user">
+        <div class="avatar">MF</div>
+        <div><div class="testi-name">Maya Fitriani</div><div class="testi-rank">Grandmaster → Epic</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER FORM -->
+<section id="order">
+  <div class="section-title">Form Order</div>
+  <div class="section-sub">Isi data kamu, admin kami akan segera menghubungi via WA</div>
+  <div class="form-box">
+    <div class="form-group">
+      <label for="nama">Nama / Nickname</label>
+      <input type="text" id="nama" placeholder="Contoh: Aldi Gaming"/>
+    </div>
+    <div class="form-group">
+      <label for="wa">Nomor WhatsApp</label>
+      <input type="tel" id="wa" placeholder="08xxxxxxxxxx"/>
+    </div>
+    <div class="form-group">
+      <label for="id-game">ID Game MLBB</label>
+      <input type="text" id="id-game" placeholder="Contoh: 123456789 (1234)"/>
+    </div>
+    <div class="form-group">
+      <label for="layanan">Pilih Layanan</label>
+      <select id="layanan">
+        <option value="">-- Pilih Layanan --</option>
+        <option>Joki Rank</option>
+        <option>Winstreak</option>
+        <option>Top Up Diamond</option>
+        <option>Push MMR</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="rank-sekarang">Rank Saat Ini</label>
+      <select id="rank-sekarang">
+        <option value="">-- Pilih Rank --</option>
+        <option>Warrior</option>
+        <option>Elite</option>
+        <option>Master</option>
+        <option>Grandmaster</option>
+        <option>Epic</option>
+        <option>Legend</option>
+        <option>Mythic</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="rank-tujuan">Target Rank</label>
+      <select id="rank-tujuan">
+        <option value="">-- Pilih Target --</option>
+        <option>Elite</option>
+        <option>Master</option>
+        <option>Grandmaster</option>
+        <option>Epic</option>
+        <option>Legend</option>
+        <option>Mythic</option>
+        <option>Mythic Honor</option>
+        <option>Mythic Glory</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="catatan">Catatan (opsional)</label>
+      <textarea id="catatan" placeholder="Contoh: hero favorit, server, atau permintaan khusus lainnya..."></textarea>
+    </div>
+    <button class="btn-submit" onclick="submitOrder()">🚀 KIRIM ORDER</button>
+    <p class="form-note">🔒 Data kamu aman · Admin merespons dalam &lt; 15 menit</p>
+  </div>
+</section>
+
+<!-- KALKULATOR JOKI RANK -->
+<section id="kalkulator">
+  <div class="section-title">🧮 Kalkulator Joki Rank</div>
+  <div class="section-sub">Hitung estimasi harga & waktu naik rank kamu secara otomatis</div>
+  <div class="calc-box">
+    <div class="calc-row">
+      <div class="form-group" style="margin:0">
+        <label>Rank Saat Ini</label>
+        <select id="calc-from" onchange="hitungJoki()">
+          <option value="">-- Pilih --</option>
+          <option value="0">🥉 Warrior</option>
+          <option value="1">🥈 Elite</option>
+          <option value="2">🥇 Master</option>
+          <option value="3">⚔️ Grandmaster</option>
+          <option value="4">💚 Epic</option>
+          <option value="5">🦁 Legend</option>
+          <option value="6">🔮 Mythic</option>
+          <option value="7">💙 Mythic Honor</option>
+          <option value="8">🥇 Mythic Glory</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin:0">
+        <label>Target Rank</label>
+        <select id="calc-to" onchange="hitungJoki()">
+          <option value="">-- Pilih --</option>
+          <option value="0">🥉 Warrior</option>
+          <option value="1">🥈 Elite</option>
+          <option value="2">🥇 Master</option>
+          <option value="3">⚔️ Grandmaster</option>
+          <option value="4">💚 Epic</option>
+          <option value="5">🦁 Legend</option>
+          <option value="6">🔮 Mythic</option>
+          <option value="7">💙 Mythic Honor</option>
+          <option value="8">🥇 Mythic Glory</option>
+          <option value="9">✨ Mythic Immortal</option>
+        </select>
+      </div>
+    </div>
+    <div id="calc-result" class="calc-result">
+      <div class="result-row"><span class="result-label">Dari Rank</span><span class="val" id="r-from">-</span></div>
+      <div class="result-row"><span class="result-label">Target Rank</span><span class="val" id="r-to">-</span></div>
+      <div class="result-row"><span class="result-label">Estimasi Waktu</span><span class="val" id="r-time">-</span></div>
+      <div class="result-row"><span class="result-label">Total Harga</span><span class="val" id="r-price" style="color:var(--gold)">-</span></div>
+      <div style="margin-top:1.25rem">
+        <button class="btn-submit" onclick="orderDariKalk()" style="font-size:.9rem;padding:.7rem">
+          🚀 Order Langsung via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOP UP DIAMOND -->
+<section id="topup" style="background:var(--surface)">
+  <div class="section-title">💎 Top Up Diamond</div>
+  <div class="section-sub">Harga murah, proses cepat, 100% aman · Pilih nominal & langsung order</div>
+
+  <!-- Step indicator -->
+  <div class="step-indicator">
+    <div class="si-step active" id="si1"><div class="si-num">1</div><div class="si-label">Pilih Diamond</div></div>
+    <div class="si-line"></div>
+    <div class="si-step" id="si2"><div class="si-num">2</div><div class="si-label">Isi Data</div></div>
+    <div class="si-line"></div>
+    <div class="si-step" id="si3"><div class="si-num">3</div><div class="si-label">Konfirmasi</div></div>
+  </div>
+
+  <div class="topup-wrapper">
+    <!-- LEFT: form -->
+    <div>
+      <!-- STEP 1: Pilih diamond -->
+      <div id="step1">
+        <div style="margin-bottom:1rem;font-weight:600;font-size:.9rem">Pilih Nominal Diamond</div>
+        <div class="diamond-grid" id="diamond-grid"></div>
+        <button class="btn-submit" onclick="goStep2()" style="font-size:.9rem;padding:.7rem;max-width:300px">
+          Lanjut Isi Data →
+        </button>
+      </div>
+
+      <!-- STEP 2: Input data -->
+      <div id="step2" style="display:none">
+        <div class="form-box" style="padding:1.5rem;max-width:100%">
+          <div class="form-group">
+            <label>ID Game MLBB</label>
+            <input type="text" id="tu-id" placeholder="Contoh: 123456789 (1234)" oninput="updateSummary()"/>
+            <small style="color:var(--muted);font-size:.78rem;margin-top:.3rem;display:block">Cek ID di profil game kamu</small>
+          </div>
+          <div class="form-group">
+            <label>Nomor WhatsApp</label>
+            <input type="tel" id="tu-wa" placeholder="08xxxxxxxxxx" oninput="updateSummary()"/>
+          </div>
+          <div class="form-group">
+            <label>Metode Pembayaran</label>
+            <div class="payment-methods">
+              <div class="pay-btn" onclick="pilihBayar(this,'QRIS')"><span class="pay-icon"><img src="qris-logo.png" width="24"></span>QRIS</div>
+              <div class="pay-btn" onclick="pilihBayar(this,'Dana')"><span class="pay-icon"><img src="dana-logo.png" width="24"></span>Dana</div>
+              <div class="pay-btn" onclick="pilihBayar(this,'GoPay')"><span class="pay-icon"><img src="gopay-logo.png" width="24"></span>GoPay</div>
+              <div class="pay-btn" onclick="pilihBayar(this,'OVO')"><span class="pay-icon"><img src="ovo-logo.png" width="24"></span>OVO</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+            <button class="btn-outline" onclick="goStep1()" style="flex:1;padding:.7rem;border-radius:8px;cursor:pointer;font-weight:600;color:var(--blue);background:transparent;">← Kembali</button>
+            <button class="btn-submit" onclick="goStep3()" style="flex:2;padding:.7rem">Konfirmasi Order →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Konfirmasi -->
+      <div id="step3" style="display:none">
+        <div class="confirm-screen show">
+          <div class="confirm-icon">✅</div>
+          <h3>Order Siap Dikirim!</h3>
+          <p>Cek detail pesananmu di bawah sebelum konfirmasi ke WhatsApp admin kami.</p>
+          <div class="confirm-detail" id="confirm-detail"></div>
+          <button class="btn-submit" onclick="finalOrder()" style="padding:.85rem">
+            💬 Kirim Order via WhatsApp
+          </button>
+          <br><br>
+          <a href="#" onclick="goStep1();return false;" style="color:var(--muted);font-size:.82rem">← Ubah pesanan</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: summary -->
+    <div class="topup-summary">
+      <h3>📋 Ringkasan Order</h3>
+      <div id="summary-content">
+        <div class="empty-summary">Pilih nominal diamond untuk melihat ringkasan</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo">lev1nn<span>store</span>.id</div>
+    <p>Hadir sebagai solusi utama dan pusat layanan top up game paling tepercaya yang dirancang khusus untuk memenuhi kebutuhan para gamers Indonesia. Kami berkomitmen menyajikan pengalaman transaksi yang aman, harga paling kompetitif di pasaran, serta proses pengiriman instan dalam hitungan detik selama 24 jam non-stop.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Layanan</h4>
+    <ul>
+      <li><a href="#layanan">Joki Rank</a></li>
+      <li><a href="#layanan">Winstreak</a></li>
+      <li><a href="#layanan">Top Up Diamond</a></li>
+      <li><a href="#layanan">Push MMR</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Informasi</h4>
+    <ul>
+      <li><a href="#cara-order">Cara Order</a></li>
+      <li><a href="#paket">Daftar Harga</a></li>
+      <li><a href="#testimoni">Testimoni</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Kontak</h4>
+    <ul>
+      <li><a href="https://wa.me/628159815683" target="_blank">WhatsApp Admin</a></li>
+      <li><a href="https://www.instagram.com/vnlzno/" target="_blank">Instagram</a></li>
+      <li><a href="https://t.me/vincenttgm" target="_blank">Telegram</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  © 2026 lev1nnstore.id · Dibuat dengan sepenuh hati untuk memenuhi kebutuhan para player Mobile Legends <3
+</div>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/628159815683" target="_blank" class="wa-float" title="Chat WhatsApp">
+  <img src="whatsapp.png" width="28">
+</a>
+
+<!-- TOAST -->
+<div id="toast">✅ Order terkirim! Admin akan menghubungi kamu segera.</div>
+
+<script>
+  // ── DATA ──
+  const RANK_NAMES = ['Warrior','Elite','Master','Grandmaster','Epic','Legend','Mythic','Mythic Honor','Mythic Glory','Mythic Immortal'];
+  const RANK_IMG = [
+    '🥉', '🥈', '🥇',
+    '<img src="grandmaster.png" width="22" style="vertical-align:middle">',
+    '<img src="epic.png" width="22" style="vertical-align:middle">',
+    '<img src="legend.png" width="22" style="vertical-align:middle">',
+    '<img src="mythic.png" width="22" style="vertical-align:middle">',
+    '<img src="mythic honor.png" width="22" style="vertical-align:middle">',
+    '<img src="mythic glory.png" width="22" style="vertical-align:middle">',
+    '<img src="mythic immortal.png" width="22" style="vertical-align:middle">',
+  ];
+  const RANK_PRICES = [0, 15000, 25000, 45000, 65000, 110000, 180000, 280000, 420000, 600000];
+  const RANK_DAYS   = ['','1–2 hari','1–2 hari','2–3 hari','2–3 hari','3–5 hari','3–7 hari','7–14 hari','14–21 hari','Custom (hubungi admin)'];
+
+  const DIAMONDS = [
+    { amt: 5,    bonus: 0,   price: 2500,   ori: 3500   },
+    { amt: 10,   bonus: 0,   price: 4000,   ori: 5500   },
+    { amt: 12,   bonus: 1,   price: 4500,   ori: 6500   },
+    { amt: 15,   bonus: 0,   price: 5500,   ori: 8000   },
+    { amt: 17,   bonus: 1,   price: 5800,   ori: 8500   },
+    { amt: 19,   bonus: 2,   price: 6500,   ori: 9500   },
+    { amt: 22,   bonus: 2,   price: 7500,   ori: 11000  },
+    { amt: 28,   bonus: 3,   price: 9000,   ori: 13000  },
+    { amt: 36,   bonus: 3,   price: 11000,  ori: 16000  },
+    { amt: 44,   bonus: 4,   price: 13000,  ori: 19000  },
+    { amt: 59,   bonus: 6,   price: 17000,  ori: 24000  },
+    { amt: 64,   bonus: 6,   price: 18500,  ori: 27000  },
+    { amt: 71,   bonus: 7,   price: 20500,  ori: 29000  },
+    { amt: 85,   bonus: 8,   price: 24000,  ori: 34000  },
+    { amt: 113,  bonus: 11,  price: 32000,  ori: 45000  },
+    { amt: 128,  bonus: 12,  price: 36000,  ori: 51000  },
+    { amt: 148,  bonus: 14,  price: 41000,  ori: 58000  },
+    { amt: 170,  bonus: 16,  price: 47000,  ori: 66000  },
+    { amt: 176,  bonus: 17,  price: 49000,  ori: 69000  },
+    { amt: 184,  bonus: 18,  price: 51000,  ori: 72000  },
+    { amt: 222,  bonus: 21,  price: 61000,  ori: 86000  },
+    { amt: 220,  bonus: 20,  price: 61500,  ori: 87000  },
+    { amt: 240,  bonus: 23,  price: 66000,  ori: 93000  },
+    { amt: 277,  bonus: 26,  price: 76000,  ori: 107000 },
+    { amt: 284,  bonus: 27,  price: 78000,  ori: 110000 },
+    { amt: 296,  bonus: 40,  price: 81000,  ori: 114000 },
+    { amt: 300,  bonus: 40,  price: 82500,  ori: 116000 },
+    { amt: 332,  bonus: 43,  price: 91000,  ori: 128000 },
+    { amt: 340,  bonus: 44,  price: 93500,  ori: 132000 },
+    { amt: 355,  bonus: 46,  price: 97000,  ori: 137000 },
+    { amt: 370,  bonus: 46,  price: 101000, ori: 143000 },
+    { amt: 384,  bonus: 48,  price: 105000, ori: 148000 },
+    { amt: 453,  bonus: 45,  price: 124000, ori: 175000 },
+    { amt: 568,  bonus: 65,  price: 151000, ori: 213000 },
+    { amt: 642,  bonus: 71,  price: 170000, ori: 240000 },
+    { amt: 716,  bonus: 79,  price: 190000, ori: 268000 },
+    { amt: 792,  bonus: 85,  price: 211000, ori: 298000 },
+    { amt: 875,  bonus: 101, price: 230000, ori: 325000 },
+    { amt: 963,  bonus: 109, price: 248500, ori: 351000 },
+    { amt: 1000, bonus: 113, price: 258500, ori: 365000, hot: true },
+    { amt: 1136, bonus: 146, price: 294000, ori: 415000 },
+    { amt: 1159, bonus: 128, price: 300000, ori: 424000 },
+    { amt: 1220, bonus: 138, price: 316500, ori: 447000 },
+    { amt: 1506, bonus: 172, price: 391000, ori: 552000 },
+    { amt: 1704, bonus: 195, price: 440000, ori: 621000 },
+    { amt: 2010, bonus: 302, price: 490000, ori: 692000, best: true },
+  ];
+
+  const WDP = { wdp: true, amt: '220', price: 27500, ori: 45000, label: 'Weekly Diamond Pass', desc: '20 dm/hari × 7 hari + bonus login' };
+
+  let selectedDiamond = null;
+  let selectedPayment = '';
+  const nomorBayar = {
+  'Dana': '08159815683',
+  'GoPay': '08159815683',
+  'OVO': '08159815683'
+};
+
+  // ── BUILD DIAMOND GRID ──
+  function buildDiamondGrid() {
+    const grid = document.getElementById('diamond-grid');
+
+    // WDP card special — full width
+    const wdpCard = `
+      <div class="diamond-card" onclick="pilihWDP()" id="dc-wdp" style="grid-column:1/-1;display:flex;align-items:center;gap:1.25rem;text-align:left;background:linear-gradient(135deg,rgba(245,197,24,.08),rgba(59,130,246,.08));border-color:rgba(245,197,24,.3)">
+        <div class="dm-badge" style="background:var(--success);top:-8px;right:-8px">HEMAT</div>
+        <img src="wdpmlbb-removebg-preview.png" width="70" style="border-radius:8px;object-fit:cover">
+        <div style="flex:1">
+          <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.2rem">Weekly Diamond Pass</div>
+          <div style="color:var(--muted);font-size:.8rem;margin-bottom:.4rem">220 💎 selama 7 hari · 20 diamond/hari + bonus login harian</div>
+          <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+            <span style="color:var(--gold);font-weight:700;font-size:1rem">Rp 27.500</span>
+            <span style="background:rgba(34,197,94,.15);color:var(--success);border:1px solid rgba(34,197,94,.3);padding:.1rem .45rem;border-radius:4px;font-size:.72rem;font-weight:700">Paling Hemat!</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const dmCards = DIAMONDS.map((d, i) => `
+      <div class="diamond-card" onclick="pilihDiamond(${i})" id="dc-${i}">
+        ${d.hot ? '<div class="dm-badge">HOT</div>' : ''}
+        ${d.best ? '<div class="dm-badge" style="background:var(--gold);color:#000">BEST</div>' : ''}
+        <div class="dm-icon">💎</div>
+        <div class="dm-amt">${d.amt}${d.bonus ? `<span style="font-size:.7rem;color:var(--success)">+${d.bonus}</span>` : ''}</div>
+        <div class="dm-price">Rp ${d.price.toLocaleString('id')}</div>
+      </div>
+    `).join('');
+
+    grid.innerHTML = wdpCard + dmCards;
+  }
+  buildDiamondGrid();
+
+  // ── PILIH WDP ──
+  function pilihWDP() {
+    document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('dc-wdp').classList.add('selected');
+    selectedDiamond = WDP;
+    updateSummary();
+  }
+
+  // ── PILIH DIAMOND ──
+  function pilihDiamond(i) {
+    document.querySelectorAll('.diamond-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('dc-'+i).classList.add('selected');
+    selectedDiamond = DIAMONDS[i];
+    updateSummary();
+  }
+
+  // ── UPDATE SUMMARY ──
+  function updateSummary() {
+    const sc = document.getElementById('summary-content');
+    if (!selectedDiamond) {
+      sc.innerHTML = '<div class="empty-summary">Pilih nominal diamond untuk melihat ringkasan</div>';
+      return;
+    }
+    const id  = document.getElementById('tu-id')?.value || '-';
+    const wa  = document.getElementById('tu-wa')?.value || '-';
+    const dm  = selectedDiamond;
+    const disc = Math.round((1 - dm.price/dm.ori)*100);
+
+    const namaItem = dm.wdp ? 'Weekly Diamond Pass 🎫' : `💎 ${dm.amt}${dm.bonus ? ' + '+dm.bonus+' bonus' : ''}`;
+    const deskItem = dm.wdp ? dm.desc : `${dm.amt} Diamond`;
+
+    sc.innerHTML = `
+      <div class="summary-row"><span>Item</span><span class="s-val">${namaItem}</span></div>
+      <div class="summary-row"><span>Detail</span><span class="s-val" style="font-size:.78rem">${deskItem}</span></div>
+      <div class="summary-row"><span>ID Game</span><span class="s-val">${id || '-'}</span></div>
+      <div class="summary-row"><span>WhatsApp</span><span class="s-val">${wa || '-'}</span></div>
+      <div class="summary-row"><span>Pembayaran</span><span class="s-val">${selectedPayment || '-'}</span></div>
+      <div class="summary-total"><span>Total Bayar</span><span class="t-val">Rp ${dm.price.toLocaleString('id')}</span></div>
+    `;
+  }
+
+  // ── PAYMENT SELECT ──
+  function pilihBayar(el, method) {
+    document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPayment = method;
+    updateSummary();
+  }
+
+  // ── STEP NAVIGATION ──
+  function setStep(n) {
+    ['step1','step2','step3'].forEach((s,i) => {
+      document.getElementById(s).style.display = (i===n-1) ? 'block' : 'none';
+    });
+    for (let i=1;i<=3;i++) {
+      const el = document.getElementById('si'+i);
+      el.className = 'si-step' + (i<n?' done':i===n?' active':'');
+    }
+  }
+
+  function goStep1() { setStep(1); }
+
+  function goStep2() {
+    if (!selectedDiamond) { alert('Pilih nominal diamond dulu ya!'); return; }
+    setStep(2);
+    updateSummary();
+  }
+
+  function goStep3() {
+    const id = document.getElementById('tu-id').value.trim();
+    const wa = document.getElementById('tu-wa').value.trim();
+    if (!id) { alert('Masukkan ID Game MLBB kamu!'); return; }
+    if (!wa) { alert('Masukkan nomor WhatsApp kamu!'); return; }
+    if (!selectedPayment) { alert('Pilih metode pembayaran dulu!'); return; }
+
+    const dm = selectedDiamond;
+    document.getElementById('confirm-detail').innerHTML = `
+      <div class="summary-row"><span>Nominal</span><span class="s-val">💎 ${dm.amt}${dm.bonus?'+'+dm.bonus+' bonus':''} Diamond</span></div>
+      <div class="summary-row"><span>ID Game</span><span class="s-val">${id}</span></div>
+      <div class="summary-row"><span>WhatsApp</span><span class="s-val">${wa}</span></div>
+      <div class="summary-row"><span>Pembayaran</span><span class="s-val">${selectedPayment}</span></div>
+      <div class="summary-row"><span>Transfer ke</span><span class="s-val">${nomorBayar[selectedPayment] || 'hubungi admin'}</span></div>
+      <div class="summary-total"><span>Total</span><span class="t-val">Rp ${dm.price.toLocaleString('id')}</span></div>
+    `;
+    setStep(3);
+  }
+
+  function finalOrder() {
+    const dm = selectedDiamond;
+    const id = document.getElementById('tu-id').value.trim();
+    const wa = document.getElementById('tu-wa').value.trim();
+    const namaItem = dm.wdp ? 'Weekly Diamond Pass (~210-220 dm/7 hari)' : `${dm.amt}${dm.bonus ? ' + '+dm.bonus+' bonus' : ''} Diamond`;
+    const msg = encodeURIComponent(
+      `Halo, saya mau Top Up MLBB!\n\n` +
+      `🎫 Item: ${namaItem}\n` +
+      `🎮 ID Game: ${id}\n` +
+      `💳 Pembayaran: ${selectedPayment}\n` +
+      `💰 Total: Rp ${dm.price.toLocaleString('id')}\n\n` +
+      `💳 Transfer ke: ${nomorBayar[selectedPayment] || 'hubungi admin'}\n` +
+      `Mohon konfirmasi setelah transfer, terima kasih!`
+    );
+    window.open(`https://wa.me/628159815683?text=${msg}`, '_blank');
+    showToast('✅ Diarahkan ke WhatsApp admin!');
+  }
+
+  // ── KALKULATOR RANK ──
+  function hitungJoki() {
+    const from = parseInt(document.getElementById('calc-from').value);
+    const to   = parseInt(document.getElementById('calc-to').value);
+    const result = document.getElementById('calc-result');
+
+    if (isNaN(from) || isNaN(to)) { result.classList.remove('show'); return; }
+    if (to <= from) { alert('Target rank harus lebih tinggi dari rank saat ini!'); result.classList.remove('show'); return; }
+
+    let totalPrice = 0;
+    for (let i = from+1; i <= to; i++) totalPrice += RANK_PRICES[i];
+
+    document.getElementById('r-from').innerHTML = RANK_IMG[from]+' '+RANK_NAMES[from];
+    document.getElementById('r-to').innerHTML   = RANK_IMG[to]+' '+RANK_NAMES[to];
+    document.getElementById('r-time').textContent = RANK_DAYS[to] || 'Custom (hubungi admin)';
+    document.getElementById('r-price').textContent = 'Rp '+totalPrice.toLocaleString('id');
+    result.classList.add('show');
+  }
+
+  function orderDariKalk() {
+    const from = parseInt(document.getElementById('calc-from').value);
+    const to   = parseInt(document.getElementById('calc-to').value);
+    if (isNaN(from)||isNaN(to)) return;
+    let total = 0;
+    for (let i=from+1;i<=to;i++) total+=RANK_PRICES[i];
+    const msg = encodeURIComponent(
+      `Halo, saya mau order Joki Rank!\n\n` +
+      `🎮 Dari: ${RANK_NAMES[from]}\n` +
+      `🏆 Target: ${RANK_NAMES[to]}\n` +
+      `💰 Total: Rp ${total.toLocaleString('id')}\n\n` +
+      `Mohon informasi lebih lanjut, terima kasih!`
+    );
+    window.open(`https://wa.me/628159815683?text=${msg}`, '_blank');
+  }
+
+  // ── OLD ORDER FORM ──
+  function submitOrder() {
+    const nama = document.getElementById('nama').value.trim();
+    const wa   = document.getElementById('wa').value.trim();
+    const id   = document.getElementById('id-game').value.trim();
+    const layan = document.getElementById('layanan').value;
+    if (!nama || !wa || !id || !layan) { alert('Mohon lengkapi semua field yang wajib diisi!'); return; }
+    const rankNow    = document.getElementById('rank-sekarang').value;
+    const rankTarget = document.getElementById('rank-tujuan').value;
+    const catatan    = document.getElementById('catatan').value;
+    const msg = encodeURIComponent(
+      `Halo, saya mau order!\n\nNama: ${nama}\nID Game: ${id}\nLayanan: ${layan}\nRank Sekarang: ${rankNow}\nTarget Rank: ${rankTarget}\nCatatan: ${catatan||'-'}`
+    );
+    window.open(`https://wa.me/628159815683?text=${msg}`, '_blank');
+    showToast('✅ Order terkirim! Admin akan menghubungi kamu segera.');
+  }
+
+  // ── TOAST ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // ── NAV HIGHLIGHT ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? 'var(--text)' : '';
+    });
+  });
+</script>
+</body>
+</html>

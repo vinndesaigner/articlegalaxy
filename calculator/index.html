@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spider-Man Web Swinging Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #1e1e24;
+      font-family: sans-serif;
+    }
+    canvas {
+      display: block;
+    }
+    #ui {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: #fff;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="ui">
+    <h2>🕷️ Web Shooter Simulator</h2>
+    <p><b>Klik Kiri:</b> Tembak Jaring / Mengayun</p>
+    <p><b>A / D:</b> Dorongan Ekstra Saat Mengayun</p>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // --- Benda & Bangunan (Building Targets) ---
+    const buildings = [
+      { x: 100, y: 200, w: 150, h: 600 },
+      { x: 350, y: 150, w: 180, h: 650 },
+      { x: 600, y: 250, w: 160, h: 550 },
+      { x: 850, y: 100, w: 200, h: 700 },
+      { x: 1150, y: 200, w: 170, h: 600 },
+      { x: 1400, y: 180, w: 190, h: 620 }
+    ];
+
+    // --- Karakter (Player) ---
+    const player = {
+      x: 50,
+      y: 300,
+      vx: 5,
+      vy: 0,
+      radius: 12,
+      gravity: 0.35,
+      friction: 0.99
+    };
+
+    // --- Web / Jaring ---
+    const web = {
+      active: false,
+      anchorX: 0,
+      anchorY: 0,
+      length: 0
+    };
+
+    const keys = {};
+
+    window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+    window.addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
+
+    // --- Tembak Jaring Saat Mouse Diklik ---
+    window.addEventListener('mousedown', (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      // Cek apakah klik mengenai bangunan
+      for (let b of buildings) {
+        if (mouseX >= b.x && mouseX <= b.x + b.w && mouseY >= b.y && mouseY <= b.y + b.h) {
+          web.anchorX = mouseX;
+          web.anchorY = mouseY;
+          
+          // Hitung jarak tali (panjang jaring awal)
+          const dx = player.x - web.anchorX;
+          const dy = player.y - web.anchorY;
+          web.length = Math.sqrt(dx * dx + dy * dy);
+          web.active = true;
+          break;
+        }
+      }
+    });
+
+    // Lepas Jaring saat Klik Dilepas
+    window.addEventListener('mouseup', () => {
+      web.active = false;
+    });
+
+    // --- Update Fisika & Logic ---
+    function update() {
+      // Input Gerak Horizontal (A/D)
+      if (keys['a']) player.vx -= 0.2;
+      if (keys['d']) player.vx += 0.2;
+
+      // Gravitasi & Gesekan Udara
+      player.vy += player.gravity;
+      player.vx *= player.friction;
+      player.vy *= player.friction;
+
+      // Jika Jaring Aktif (Mekanika Pendulum / Hooke)
+      if (web.active) {
+        const dx = player.x - web.anchorX;
+        const dy = player.y - web.anchorY;
+        const currentDistance = Math.sqrt(dx * dx + dy * dy);
+
+        // Jika pemain melampaui panjang maksimal tali, berikan tegangan tali
+        if (currentDistance > web.length) {
+          const nx = dx / currentDistance;
+          const ny = dy / currentDistance;
+
+          // Proyeksi kecepatan pada sumbu tali
+          const dot = player.vx * nx + player.vy * ny;
+
+          // Hilangkan komponen kecepatan yang menjauhi titik anchor
+          if (dot > 0) {
+            player.vx -= dot * nx;
+            player.vy -= dot * ny;
+          }
+
+          // Koreksi posisi agar tetap berada di radius tali
+          player.x = web.anchorX + nx * web.length;
+          player.y = web.anchorY + ny * web.length;
+        }
+      }
+
+      // Update Posisi
+      player.x += player.vx;
+      player.y += player.vy;
+
+      // Collision dengan Tanah
+      if (player.y + player.radius > canvas.height) {
+        player.y = canvas.height - player.radius;
+        player.vy = 0;
+        player.vx *= 0.8; // gesekan tanah
+      }
+
+      // Camera Follow (Looping World Sederhana)
+      if (player.x > canvas.width + 100) {
+        player.x = -50;
+      } else if (player.x < -100) {
+        player.x = canvas.width + 50;
+      }
+    }
+
+    // --- Rendering / Gambar ---
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Gambar Bangunan
+      ctx.fillStyle = '#2b2d42';
+      for (let b of buildings) {
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        // Atap gedung
+        ctx.fillStyle = '#d90429';
+        ctx.fillRect(b.x, b.y, b.w, 8);
+        ctx.fillStyle = '#2b2d42';
+      }
+
+      // Gambar Tali Jaring (Web)
+      if (web.active) {
+        ctx.beginPath();
+        ctx.moveTo(player.x, player.y);
+        ctx.lineTo(web.anchorX, web.anchorY);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Titik Anchor Jaring
+        ctx.beginPath();
+        ctx.arc(web.anchorX, web.anchorY, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffff00';
+        ctx.fill();
+      }
+
+      // Gambar Spider-Man (Karakter)
+      ctx.beginPath();
+      ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#ef233c'; // Warna Merah
+      ctx.fill();
+      ctx.strokeStyle = '#d90429';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    loop();
+  </script>
+</body>
+</html>

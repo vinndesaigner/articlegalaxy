@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini FC 2D - Audio & Stadion Vincent</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+        #ui {
+            position: absolute;
+            top: 15px;
+            text-align: center;
+            width: 100%;
+            z-index: 10;
+        }
+        h1 { margin: 0; font-size: 22px; letter-spacing: 2px; }
+        #scoreBoard { font-size: 30px; font-weight: bold; margin: 5px 0; color: #ffcc00; }
+        #goalBanner {
+            position: absolute;
+            top: 40%;
+            width: 100%;
+            text-align: center;
+            font-size: 60px;
+            font-weight: 900;
+            color: #ff0055;
+            text-shadow: 0 0 20px #fff;
+            display: none;
+            z-index: 20;
+        }
+        canvas {
+            border: 8px solid #eee;
+            background-color: #2e8b57;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <h1>STADION VINCENT - MINI FC 2D</h1>
+        <div id="scoreBoard">Biru: <span id="score1">0</span> | <span id="score2">0</span> : Musuh</div>
+        <div style="font-size: 12px; color: #aaa;">Tekan Arah Panah buat gerak | Z / SPACEBAR buat tendang kenceng</div>
+    </div>
+
+    <div id="goalBanner">GOOOOOOOOL! ⚽🎉</div>
+
+    <canvas id="gameCanvas" width="1000" height="600"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const s1HTML = document.getElementById('score1');
+        const s2HTML = document.getElementById('score2');
+        const goalBanner = document.getElementById('goalBanner');
+
+        // --- WEB AUDIO API (GENERATOR SUARA GEMURUH PENONTON) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playCheerSound() {
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            // Bikin White Noise (Dasar Suara Gemuruh Penonton)
+            const bufferSize = audioCtx.sampleRate * 3; // Durasi 3 detik
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            // Filter Frekuensi biar mirip Sorakan Penonton Stadion
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 800; // Frekuensi vokal keramaian
+            filter.Q.value = 1.2;
+
+            // Envelope (Pengatur Volume: Naik mendadak lalu pelan-pelan menghilang)
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.8, audioCtx.currentTime + 0.2); // Puncak sorakan
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 3.0); // Menghilang
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start();
+        }
+
+        // --- KONFIGURASI GAME ---
+        const cw = canvas.width;
+        const ch = canvas.height;
+        const goalW = 40; const goalH = 160;
+        const goalY = (ch / 2) - (goalH / 2);
+
+        let scores = { player1: 0, player2: 0 };
+        let isGoalEffect = false;
+        let flashColor = 'white';
+
+        const player = { x: 150, y: ch / 2, radius: 18, color: 'royalblue', speed: 6 };
+        const ball = { x: cw / 2, y: ch / 2, radius: 12, color: 'white', vx: 0, vy: 0, friction: 0.985 };
+
+        const keys = {};
+        window.addEventListener('keydown', (e) => {
+            keys[e.key] = true;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        });
+        window.addEventListener('keyup', (e) => keys[e.key] = false);
+
+        function triggerGoal(scorer) {
+            playCheerSound(); // 🔥 BUNYI SUARA GEMURUH!
+            
+            if (scorer === 1) scores.player1++;
+            else scores.player2++;
+
+            s1HTML.innerText = scores.player1;
+            s2HTML.innerText = scores.player2;
+
+            // Efek Banner & Kedip Lapangan
+            isGoalEffect = true;
+            goalBanner.style.display = 'block';
+
+            let count = 0;
+            let interval = setInterval(() => {
+                flashColor = (count % 2 === 0) ? '#ff0055' : 'white';
+                count++;
+                if (count > 6) {
+                    clearInterval(interval);
+                    isGoalEffect = false;
+                    goalBanner.style.display = 'none';
+                    // Reset Game
+                    player.x = 150; player.y = ch / 2;
+                    ball.x = cw / 2; ball.y = ch / 2;
+                    ball.vx = 0; ball.vy = 0;
+                }
+            }, 250);
+        }
+
+        function update() {
+            if (isGoalEffect) return; // Pause bentar kalo pas gol
+
+            // Movement
+            if (keys['ArrowUp'] && player.y - player.radius > 0) player.y -= player.speed;
+            if (keys['ArrowDown'] && player.y + player.radius < ch) player.y += player.speed;
+            if (keys['ArrowLeft'] && player.x - player.radius > 0) player.x -= player.speed;
+            if (keys['ArrowRight'] && player.x + player.radius < cw) player.x += player.speed;
+
+            // Ball Physics
+            ball.x += ball.vx; ball.y += ball.vy;
+            ball.vx *= ball.friction; ball.vy *= ball.friction;
+
+            // Collision & Kick
+            let dx = ball.x - player.x; let dy = ball.y - player.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < player.radius + ball.radius) {
+                let angle = Math.atan2(dy, dx);
+                let kickForce = (keys['z'] || keys[' '] || keys['Z']) ? 23 : 8;
+                ball.vx = Math.cos(angle) * kickForce;
+                ball.vy = Math.sin(angle) * kickForce;
+            }
+
+            // Goal Detection
+            if (ball.x + ball.radius > cw && ball.y > goalY && ball.y < goalY + goalH) {
+                triggerGoal(1);
+            } else if (ball.x - ball.radius < 0 && ball.y > goalY && ball.y < goalY + goalH) {
+                triggerGoal(2);
+            }
+
+            // Bounce Walls
+            if (ball.x + ball.radius > cw && (ball.y < goalY || ball.y > goalY + goalH)) { ball.x = cw - ball.radius; ball.vx *= -1; }
+            if (ball.x - ball.radius < 0 && (ball.y < goalY || ball.y > goalY + goalH)) { ball.x = 0 + ball.radius; ball.vx *= -1; }
+            if (ball.y - ball.radius < 0) { ball.y = 0 + ball.radius; ball.vy *= -1; }
+            if (ball.y + ball.radius > ch) { ball.y = ch - ball.radius; ball.vy *= -1; }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, cw, ch);
+
+            // Lapangan
+            ctx.strokeStyle = isGoalEffect ? flashColor : 'white'; 
+            ctx.lineWidth = 4;
+
+            ctx.beginPath(); ctx.moveTo(cw / 2, 0); ctx.lineTo(cw / 2, ch); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cw / 2, ch / 2, 90, 0, Math.PI * 2); ctx.stroke();
+
+            // Area Penalti
+            ctx.beginPath(); ctx.rect(0, (ch / 2) - 130, 150, 260); ctx.stroke();
+            ctx.beginPath(); ctx.rect(cw - 150, (ch / 2) - 130, 150, 260); ctx.stroke();
+
+            // Gawang
+            ctx.fillStyle = 'white';
+            ctx.beginPath(); ctx.rect(0, goalY, goalW / 4, goalH); ctx.fill();
+            ctx.beginPath(); ctx.rect(cw - (goalW / 4), goalY, goalW / 4, goalH); ctx.fill();
+
+            // Player & Ball
+            ctx.beginPath(); ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
+            ctx.fillStyle = player.color; ctx.fill(); ctx.closePath();
+
+            ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = ball.color; ctx.fill(); ctx.closePath();
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>

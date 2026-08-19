@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Free Fire - lev1nnstore.id</title>
+    <link rel="icon" type="image/png" href="mylog.png">
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- UTILITIES & ROOT THEME --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #fff;
+            padding: 40px 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .order-container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* --- LEFT SIDE: GAME INFO CARD --- */
+        .game-sidebar {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .sidebar-img-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-sidebar p {
+            color: #8c9ba5;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #8c9ba5;
+            margin-bottom: 12px;
+        }
+
+        .info-item i {
+            color: #fccf14;
+            margin-top: 3px;
+        }
+
+        /* --- RIGHT SIDE: FORM AREA --- */
+        .form-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-num {
+            background: #fccf14;
+            color: #0b0e14;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Input Box */
+        .input-box input {
+            width: 100%;
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #fccf14;
+        }
+
+        .input-sub {
+            color: #8c9ba5;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.5;
+        }
+
+        /* Nominal Grid Item */
+        .nominal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nominal-card {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nominal-card:hover {
+            border-color: #fccf14;
+            transform: translateY(-3px);
+        }
+
+        .nominal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nominal-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 500;
+        }
+
+        /* Payment List */
+        .payment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .payment-row {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-row:hover {
+            border-color: #fccf14;
+        }
+
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .payment-left i {
+            font-size: 1.1rem;
+            color: #8c9ba5;
+        }
+
+        .payment-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 600;
+        }
+
+        /* --- BANNER KUNING MANJANG DI BAWAH --- */
+        .bottom-action-banner {
+            grid-column: span 2;
+            background: #fccf14;
+            border-radius: 20px;
+            padding: 25px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            box-shadow: 0 8px 30px rgba(252, 207, 20, 0.15);
+        }
+
+        .banner-text h4 {
+            color: #0b0e14;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner-text p {
+            color: #3a4750;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            background: #0b0e14;
+            color: #fccf14;
+            border: 2px solid #0b0e14;
+            border-radius: 14px;
+            padding: 15px 35px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: #0b0e14;
+        }
+
+        /* --- RESPONSIVE FOR HP --- */
+        @media (max-width: 900px) {
+            .order-container {
+                grid-template-columns: 1fr;
+            }
+            .bottom-action-banner {
+                grid-column: span 1;
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="order-container">
+    
+    <!-- SISI KIRI: Side Info -->
+    <aside class="game-sidebar">
+        <div class="sidebar-img-box">
+            <img src="freefiremax.jpg" alt="Garena Free Fire">
+        </div>
+        <h2>Free Fire</h2>
+        <p>Top Up Diamond Garena Free Fire resmi dan termurah se-Indonesia. Cukup masukkan Player ID Anda, pilih nominal Diamond, dan lakukan pembayaran otomatis instan 24 Jam.</p>
+        
+        <div class="info-list">
+            <div class="info-item">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Proses Instan 1-3 Detik</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Garansi Aman & 100% Legal</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-headset"></i>
+                <span>Layanan CS Aktif 24/7</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- SISI KANAN: Form Berurutan ke Bawah -->
+    <main class="form-area">
+        
+        <!-- NO 1: DATA AKUN -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <h3>Masukkan ID</h3>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Contoh: 12345678" required>
+                <small class="input-sub">Buka profil game Free Fire Anda, klik menu utama, lalu salin Player ID Anda yang tertera di bawah nickname.</small>
+            </div>
+        </section>
+
+        <!-- NO 2: PILIHAN NOMINAL -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <h3>Pilih Nominal Diamonds</h3>
+            </div>
+            
+            <div class="nominal-grid">
+                <div class="nominal-card">
+                    <span class="nominal-title">10 Diamonds</span>
+                    <span class="nominal-price">Rp 1.614</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">12 Diamonds</span>
+                    <span class="nominal-price">Rp 1.727</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">15 Diamonds</span>
+                    <span class="nominal-price">Rp 2.407</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">20 Diamonds</span>
+                    <span class="nominal-price">Rp 3.207</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">25 Diamonds</span>
+                    <span class="nominal-price">Rp 4.008</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">30 Diamonds</span>
+                    <span class="nominal-price">Rp 4.808</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">40 Diamonds</span>
+                    <span class="nominal-price">Rp 5.963</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">50 Diamonds</span>
+                    <span class="nominal-price">Rp 6.319</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">55 Diamonds</span>
+                    <span class="nominal-price">Rp 7.121</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">60 Diamonds</span>
+                    <span class="nominal-price">Rp 7.938</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">70 Diamonds</span>
+                    <span class="nominal-price">Rp 8.398</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">75 Diamonds</span>
+                    <span class="nominal-price">Rp 10.220</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">80 Diamonds</span>
+                    <span class="nominal-price">Rp 11.149</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">90 Diamonds</span>
+                    <span class="nominal-price">Rp 11.808</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">100 Diamonds</span>
+                    <span class="nominal-price">Rp 13.567</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">120 Diamonds</span>
+                    <span class="nominal-price">Rp 14.932</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">130 Diamonds</span>
+                    <span class="nominal-price">Rp 16.520</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">Membership Mingguan Lite</span>
+                    <span class="nominal-price">Rp 16.913</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">140 Diamonds</span>
+                    <span class="nominal-price">Rp 18.352</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">145 Diamonds</span>
+                    <span class="nominal-price">Rp 18.972</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">150 Diamonds</span>
+                    <span class="nominal-price">Rp 19.253</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">160 Diamonds</span>
+                    <span class="nominal-price">Rp 20.818</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">170 Diamonds</span>
+                    <span class="nominal-price">Rp 21.218</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">180 Diamonds</span>
+                    <span class="nominal-price">Rp 22.865</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">190 Diamonds</span>
+                    <span class="nominal-price">Rp 24.257</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">200 Diamonds</span>
+                    <span class="nominal-price">Rp 25.128</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">210 Diamonds</span>
+                    <span class="nominal-price">Rp 27.870</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">Membership Mingguan</span>
+                    <span class="nominal-price">Rp 28.259</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">260 Diamonds</span>
+                    <span class="nominal-price">Rp 32.098</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">250 Diamonds</span>
+                    <span class="nominal-price">Rp 32.330</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">300 Diamonds</span>
+                    <span class="nominal-price">Rp 36.184</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">280 Diamonds</span>
+                    <span class="nominal-price">Rp 37.172</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">355 Diamonds</span>
+                    <span class="nominal-price">Rp 42.987</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">360 Diamonds</span>
+                    <span class="nominal-price">Rp 43.789</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">375 Diamonds</span>
+                    <span class="nominal-price">Rp 46.194</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">420 Diamonds</span>
+                    <span class="nominal-price">Rp 51.826</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">425 Diamonds</span>
+                    <span class="nominal-price">Rp 55.745</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">475 Diamonds</span>
+                    <span class="nominal-price">Rp 57.894</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">510 Diamonds</span>
+                    <span class="nominal-price">Rp 62.587</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">515 Diamonds</span>
+                    <span class="nominal-price">Rp 63.342</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">520 Diamonds</span>
+                    <span class="nominal-price">Rp 64.634</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">495 Diamonds</span>
+                    <span class="nominal-price">Rp 65.331</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">500 Diamonds</span>
+                    <span class="nominal-price">Rp 65.960</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">545 Diamonds</span>
+                    <span class="nominal-price">Rp 72.461</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">565 Diamonds</span>
+                    <span class="nominal-price">Rp 74.319</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">645 Diamonds</span>
+                    <span class="nominal-price">Rp 79.039</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">600 Diamonds</span>
+                    <span class="nominal-price">Rp 79.745</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">655 Diamonds</span>
+                    <span class="nominal-price">Rp 80.527</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">635 Diamonds</span>
+                    <span class="nominal-price">Rp 83.605</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">Membership Bulanan</span>
+                    <span class="nominal-price">Rp 84.727</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">740 Diamonds</span>
+                    <span class="nominal-price">Rp 89.254</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">720 Diamonds</span>
+                    <span class="nominal-price">Rp 92.892</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">800 Diamonds</span>
+                    <span class="nominal-price">Rp 96.238</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">770 Diamonds</span>
+                    <span class="nominal-price">Rp 100.321</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">790 Diamonds</span>
+                    <span class="nominal-price">Rp 102.778</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">925 Diamonds</span>
+                    <span class="nominal-price">Rp 112.024</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">930 Diamonds</span>
+                    <span class="nominal-price">Rp 120.751</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1075 Diamonds</span>
+                    <span class="nominal-price">Rp 129.022</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1000 Diamonds</span>
+                    <span class="nominal-price">Rp 130.036</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1080 Diamonds</span>
+                    <span class="nominal-price">Rp 130.449</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1050 Diamonds</span>
+                    <span class="nominal-price">Rp 138.909</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1215 Diamonds</span>
+                    <span class="nominal-price">Rp 146.832</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1200 Diamonds</span>
+                    <span class="nominal-price">Rp 157.081</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1300 Diamonds</span>
+                    <span class="nominal-price">Rp 157.802</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1440 Diamonds</span>
+                    <span class="nominal-price">Rp 185.756</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1450 Diamonds</span>
+                    <span class="nominal-price">Rp 185.756</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1490 Diamonds</span>
+                    <span class="nominal-price">Rp 193.956</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1510 Diamonds</span>
+                    <span class="nominal-price">Rp 196.416</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1580 Diamonds</span>
+                    <span class="nominal-price">Rp 205.641</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1800 Diamonds</span>
+                    <span class="nominal-price">Rp 234.392</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1875 Diamonds</span>
+                    <span class="nominal-price">Rp 244.181</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1975 Diamonds</span>
+                    <span class="nominal-price">Rp 257.711</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2000 Diamonds</span>
+                    <span class="nominal-price">Rp 259.120</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2100 Diamonds</span>
+                    <span class="nominal-price">Rp 274.387</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2140 Diamonds</span>
+                    <span class="nominal-price">Rp 279.979</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2190 Diamonds</span>
+                    <span class="nominal-price">Rp 283.056</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2200 Diamonds</span>
+                    <span class="nominal-price">Rp 284.746</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2210 Diamonds</span>
+                    <span class="nominal-price">Rp 286.454</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2225 Diamonds</span>
+                    <span class="nominal-price">Rp 288.645</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2280 Diamonds</span>
+                    <span class="nominal-price">Rp 295.610</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2355 Diamonds</span>
+                    <span class="nominal-price">Rp 303.696</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2400 Diamonds</span>
+                    <span class="nominal-price">Rp 311.544</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2575 Diamonds</span>
+                    <span class="nominal-price">Rp 334.663</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2720 Diamonds</span>
+                    <span class="nominal-price">Rp 351.938</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2750 Diamonds</span>
+                    <span class="nominal-price">Rp 357.161</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">3000 Diamonds</span>
+                    <span class="nominal-price">Rp 389.705</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">3310 Diamonds</span>
+                    <span class="nominal-price">Rp 429.629</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">3640 Diamonds</span>
+                    <span class="nominal-price">Rp 464.333</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">3675 Diamonds</span>
+                    <span class="nominal-price">Rp 475.925</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">3800 Diamonds</span>
+                    <span class="nominal-price">Rp 492.098</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4000 Diamonds</span>
+                    <span class="nominal-price">Rp 511.714</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4050 Diamonds</span>
+                    <span class="nominal-price">Rp 524.236</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4340 Diamonds</span>
+                    <span class="nominal-price">Rp 563.340</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4450 Diamonds</span>
+                    <span class="nominal-price">Rp 575.943</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4720 Diamonds</span>
+                    <span class="nominal-price">Rp 611.566</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4800 Diamonds</span>
+                    <span class="nominal-price">Rp 622.452</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">4850 Diamonds</span>
+                    <span class="nominal-price">Rp 627.300</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">5500 Diamonds</span>
+                    <span class="nominal-price">Rp 662.839</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">5600 Diamonds</span>
+                    <span class="nominal-price">Rp 675.295</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">6000 Diamonds</span>
+                    <span class="nominal-price">Rp 710.978</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">6900 Diamonds</span>
+                    <span class="nominal-price">Rp 818.911</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">6480 Diamonds</span>
+                    <span class="nominal-price">Rp 839.355</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">6550 Diamonds</span>
+                    <span class="nominal-price">Rp 842.603</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7310 Diamonds</span>
+                    <span class="nominal-price">Rp 864.847</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7340 Diamonds</span>
+                    <span class="nominal-price">Rp 867.995</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7360 Diamonds</span>
+                    <span class="nominal-price">Rp 870.216</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7430 Diamonds</span>
+                    <span class="nominal-price">Rp 878.816</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7645 Diamonds</span>
+                    <span class="nominal-price">Rp 904.415</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">7290 Diamonds</span>
+                    <span class="nominal-price">Rp 925.998</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">8010 Diamonds</span>
+                    <span class="nominal-price">Rp 947.614</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">9290 Diamonds</span>
+                    <span class="nominal-price">Rp 1.100.794</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">9800 Diamonds</span>
+                    <span class="nominal-price">Rp 1.160.386</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">14580 Diamonds</span>
+                    <span class="nominal-price">Rp 1.723.206</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">37050 Diamonds</span>
+                    <span class="nominal-price">Rp 4.379.723</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">36500 Diamonds</span>
+                    <span class="nominal-price">Rp 4.667.441</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">73100 Diamonds</span>
+                    <span class="nominal-price">Rp 9.345.072</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- NO 3: METODE PEMBAYARAN -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">3</div>
+                <h3>Pilih Metode Pembayaran</h3>
+            </div>
+            
+            <div class="payment-list">
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>QRIS (All E-Wallet)</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>DANA</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Virtual Account</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BANNER KUNING SAKTI MANJANG DI PALING BAWAH -->
+    <div class="bottom-action-banner">
+        <div class="banner-text">
+            <h4>Sudah Selesai Mengisi Data?</h4>
+            <p>Pastikan Player ID dan pilihan nominal Diamonds Anda sudah sesuai sebelum melanjutkan.</p>
+        </div>
+        <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Top Up Sekarang
+        </button>
+    </div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Logik Pilih Nominal
+        const nominalCards = document.querySelectorAll('.nominal-card');
+        nominalCards.forEach(card => {
+            card.addEventListener('click', function() {
+                nominalCards.forEach(c => {
+                    c.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    c.style.background = '#182030';
+                });
+                this.style.borderColor = '#fccf14';
+                this.style.background = 'rgba(252, 207, 20, 0.05)';
+                
+                const title = this.querySelector('.nominal-title').innerText;
+                const price = this.querySelector('.nominal-price').innerText;
+                console.log('Nominal Dipilih:', title, '-', price);
+            });
+        });
+
+// 2. Logik Pilih Metode Pembayaran
+        const paymentRows = document.querySelectorAll('.payment-row');
+        paymentRows.forEach(row => {
+            row.addEventListener('click', function() {
+                paymentRows.forEach(r => {
+                    r.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    r.style.background = '#182030';
+                });
+                this.style.borderColor = '#fccf14';
+                this.style.background = 'rgba(252, 207, 20, 0.05)';
+
+                const method = this.querySelector('.payment-left span').innerText;
+                console.log('Metode Pembayaran Dipilih:', method);
+            });
+        });
+
+        // 3. Logik Pas Tombol Top Up Sekarang Diklik (Biar 5000 request lu keproses, Cuy!)
+        const btnTopup = document.querySelector('.submit-btn'); // Kalau tombol lu pake id, ganti jadi '#btn-topup'
+        if (btnTopup) {
+            btnTopup.addEventListener('click', async function() {
+                console.log('Tombol ditekan, memproses transaksi...');
+                
+                const targetId = document.getElementById('target-id')?.value;
+                 // Hapus baris ini kalau game-nya gak pakai zone ID
+
+                try {
+                    const response = await fetch('/api/vipayment-webhook', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            targetId: targetId,
+                            zoneId: zoneId
+                        })
+                    });
+
+                    const result = await response.json();
+                    console.log('Respon Webhook:', result);
+                    alert('Pesanan diproses! Silahkan cek kelanjutan pembayaran.');
+                } catch (error) {
+                    console.error('Gagal kirim data topup:', error);
+                    alert('Waduh error, Cuy!');
+                }
+            });
+        }
+
+    });
+</script>
+
+</body>
+</html>
+</body>
+</html>

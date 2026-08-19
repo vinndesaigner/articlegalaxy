@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - LEVINNSTORE</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-white p-4 md:p-8 flex items-center justify-center">
+
+    <div class="max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- KOLOM KIRI: Detail Ringkasan Pesanan -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-2xl flex flex-col justify-between">
+            <div>
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-3 h-8 bg-amber-400 rounded-full"></div>
+                    <h2 class="text-2xl font-extrabold tracking-tight">Detail Pesanan</h2>
+                </div>
+                
+                <div class="space-y-4 text-sm md:text-base">
+                    <div class="flex justify-between border-b border-slate-800 pb-3">
+                        <span class="text-slate-400">Status</span>
+                        <span class="font-bold text-amber-400 bg-amber-400/10 px-3 py-1 rounded-full text-xs border border-amber-400/20">PENDING</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800 pb-3">
+                        <span class="text-slate-400">Order ID</span>
+                        <span id="display-order-id" class="font-mono font-bold text-slate-200">LVN-LOADING...</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800 pb-3">
+                        <span class="text-slate-400">Game</span>
+                        <span id="display-game" class="font-semibold text-slate-200">-</span>
+                    </div>
+                    <div class="flex justify-between border-b border-slate-800 pb-3">
+                        <span class="text-slate-400">User ID (Zone)</span>
+                        <span id="display-user-id" class="font-mono text-slate-200">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Tagihan -->
+            <div class="mt-8 pt-5 border-t border-dashed border-slate-700">
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-slate-400">Total Pembayaran</span>
+                    <span id="display-price" class="text-2xl font-black text-emerald-400">
+                        Rp -
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- KOLOM KANAN: QRIS Pembayaran -->
+        <div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-2xl text-center flex flex-col items-center justify-center">
+            <h2 class="text-xl font-bold tracking-tight">Pembayaran via QRIS</h2>
+            <p class="text-xs text-slate-400 mt-1 mb-6">Scan QRIS Dana Bisnis/DOKU menggunakan e-wallet atau m-banking lu</p>
+            
+            <!-- Area QRIS Canvas/Image -->
+            <div class="bg-white p-4 rounded-2xl shadow-inner mb-6 inline-block border-4 border-slate-800">
+                <!-- Sementara pakai dummy QR Server, nanti diganti dynamic link dari backend -->
+                <img 
+                    src="qrpay.jpeg" 
+                    alt="QRIS Levinnstore"
+                    class="w-48 h-48 mx-auto rounded-lg"
+                />
+            </div>
+
+            <!-- Status Real-time Checker -->
+            <div class="w-full bg-slate-950 rounded-xl p-4 border border-slate-800">
+                <div class="flex items-center justify-center space-x-3">
+                    <div class="animate-spin rounded-full h-4 w-4 border-2 border-amber-400 border-t-transparent"></div>
+                    <span class="text-xs tracking-wider text-slate-300 font-semibold animate-pulse">
+                        MENUNGGU PEMBAYARAN...
+                    </span>
+                </div>
+            </div>
+
+            <p class="text-[10px] text-slate-500 mt-4 leading-relaxed">
+                *Sistem mendeteksi pembayaran secara otomatis. Jangan tutup halaman ini sebelum transaksi lu dinyatakan sukses oleh sistem.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Ambil data dari URL parameter, kalau kosong kasih fallback biar gak strip
+    const orderId = urlParams.get('orderId') || 'LVN-' + Date.now();
+    const game = urlParams.get('game') || 'Mobile Legends';
+    const userId = urlParams.get('userId') || 'Belum Diisi';
+    const price = urlParams.get('price') || '20000';
+
+    // Tempel data ke elemen HTML layout
+    document.getElementById('display-order-id').innerText = orderId;
+    document.getElementById('display-game').innerText = decodeURIComponent(game);
+    document.getElementById('display-user-id').innerText = decodeURIComponent(userId);
+    document.getElementById('display-price').innerText = 'Rp ' + parseInt(price).toLocaleString('id-ID');
+});
+    </script>
+</body>
+</html>

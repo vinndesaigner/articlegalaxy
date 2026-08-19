@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Vinn — TKJ student, cybersecurity enthusiast, aerospace builder, and developer." />
+  <title>VINN — Portfolio</title>
+  <style>
+    :root{
+      --paper:#f7f1df;
+      --ink:#111111;
+      --yellow:#ffd84d;
+      --pink:#ff7eb6;
+      --cyan:#5de4ff;
+      --green:#8df58b;
+      --orange:#ff9a5a;
+      --white:#ffffff;
+      --shadow:7px 7px 0 var(--ink);
+      --border:3px solid var(--ink);
+      --radius:14px;
+      --max:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12px 12px, rgba(17,17,17,.08) 2px, transparent 2px) 0 0/24px 24px,
+        var(--paper);
+      line-height:1.45;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{width:min(calc(100% - 32px),var(--max));margin:auto}
+    .nav{
+      position:sticky;top:12px;z-index:20;
+      width:min(calc(100% - 32px),var(--max));
+      margin:12px auto 0;
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+      background:var(--white);
+      border:var(--border);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
+      padding:12px 16px;
+    }
+    .logo{
+      font-weight:1000;font-size:1.4rem;
+      background:var(--yellow);padding:5px 10px;
+      border:var(--border);box-shadow:4px 4px 0 var(--ink);
+    }
+    .navlinks{display:flex;gap:10px;flex-wrap:wrap}
+    .navlinks a{
+      font-weight:800;padding:8px 12px;border:var(--border);
+      background:var(--paper);box-shadow:3px 3px 0 var(--ink);
+      transition:.15s transform,.15s box-shadow;
+    }
+    .navlinks a:hover{transform:translate(3px,3px);box-shadow:0 0 var(--ink)}
+    .hero{padding:84px 0 54px}
+    .hero-grid{display:grid;grid-template-columns:1.4fr .9fr;gap:28px;align-items:center}
+    .sticker{
+      display:inline-block;
+      background:var(--pink);border:var(--border);
+      box-shadow:5px 5px 0 var(--ink);
+      padding:7px 12px;font-weight:1000;transform:rotate(-2deg);
+      margin-bottom:15px;
+    }
+    h1{
+      font-size:clamp(3.5rem,9vw,7rem);
+      line-height:.9;letter-spacing:-.07em;
+      margin:0 0 18px;font-weight:1000;
+    }
+    .hero p{font-size:1.15rem;max-width:700px;font-weight:700}
+    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+    .btn{
+      display:inline-block;border:var(--border);box-shadow:6px 6px 0 var(--ink);
+      padding:12px 18px;font-weight:1000;background:var(--yellow);
+      transition:.15s transform,.15s box-shadow;
+    }
+    .btn.secondary{background:var(--white)}
+    .btn:hover{transform:translate(5px,5px);box-shadow:1px 1px 0 var(--ink)}
+    .hero-card{
+      background:var(--cyan);border:var(--border);box-shadow:var(--shadow);
+      border-radius:18px;padding:20px;transform:rotate(2deg);
+    }
+    .terminal{
+      background:var(--ink);color:#fff;border:var(--border);padding:18px;
+      min-height:310px;font-family:"Courier New",monospace;
+      box-shadow:7px 7px 0 rgba(17,17,17,.25)
+    }
+    .terminal .bar{display:flex;gap:7px;margin-bottom:18px}
+    .dot{width:12px;height:12px;border:2px solid #fff;border-radius:50%;background:var(--pink)}
+    .dot:nth-child(2){background:var(--yellow)}
+    .dot:nth-child(3){background:var(--green)}
+    .code-line{margin:9px 0}
+    .prompt{color:var(--green)}
+    .keyword{color:var(--yellow)}
+    .value{color:var(--cyan)}
+    section{padding:42px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}
+    .section-head h2{
+      margin:0;font-size:clamp(2rem,5vw,3.3rem);
+      line-height:1;font-weight:1000;letter-spacing:-.04em;
+    }
+    .section-head .tag{
+      background:var(--white);border:var(--border);box-shadow:4px 4px 0 var(--ink);
+      padding:7px 10px;font-weight:900;white-space:nowrap;
+    }
+    .about{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:20px
+    }
+    .card{
+      background:var(--white);border:var(--border);box-shadow:var(--shadow);
+      border-radius:var(--radius);padding:22px;
+    }
+    .card.yellow{background:var(--yellow)}
+    .card.pink{background:var(--pink)}
+    .card.green{background:var(--green)}
+    .card h3{font-size:1.6rem;margin:0 0 10px}
+    .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .chip{
+      border:var(--border);padding:8px 10px;background:var(--paper);
+      box-shadow:3px 3px 0 var(--ink);font-weight:900;
+    }
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .stat{padding:14px;border:var(--border);background:var(--white);box-shadow:4px 4px 0 var(--ink)}
+    .stat b{display:block;font-size:1.8rem;font-weight:1000}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .project{display:flex;flex-direction:column;min-height:300px}
+    .project .num{
+      width:54px;height:54px;border:var(--border);display:grid;place-items:center;
+      font-weight:1000;font-size:1.5rem;box-shadow:4px 4px 0 var(--ink);margin-bottom:17px
+    }
+    .project h3{font-size:1.55rem;margin:0 0 8px}
+    .project p{margin:0 0 17px}
+    .project .bottom{margin-top:auto;display:flex;justify-content:space-between;gap:8px;align-items:end}
+    .mini-btn{
+      border:var(--border);padding:9px 11px;font-weight:1000;background:var(--white);
+      box-shadow:3px 3px 0 var(--ink)
+    }
+    a.mini-btn{
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-block;
+    }
+    a.mini-btn:hover{
+      transform:translate(2px,2px);
+      box-shadow:1px 1px 0 var(--ink);
+    }
+    .timeline{display:grid;gap:14px}
+    .timeline-item{
+      display:grid;grid-template-columns:130px 1fr;gap:15px;align-items:start
+    }
+    .year{
+      background:var(--orange);border:var(--border);box-shadow:4px 4px 0 var(--ink);
+      padding:10px;font-weight:1000;text-align:center
+    }
+    .timeline-item .card{box-shadow:5px 5px 0 var(--ink)}
+    .achievements{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .achievement{
+      border:var(--border);box-shadow:var(--shadow);background:var(--white);
+      padding:20px;display:grid;grid-template-columns:auto 1fr;gap:15px;align-items:start
+    }
+    .badge{
+      width:58px;height:58px;border:var(--border);box-shadow:4px 4px 0 var(--ink);
+      background:var(--yellow);display:grid;place-items:center;font-size:1.6rem;font-weight:1000
+    }
+    .contact{
+      display:grid;grid-template-columns:1fr .8fr;gap:20px
+    }
+    .contact .big{
+      font-size:clamp(1.8rem,4vw,3.2rem);font-weight:1000;line-height:1.02;margin:0 0 18px
+    }
+    footer{padding:45px 0 70px}
+    .footer-box{
+      border:var(--border);box-shadow:var(--shadow);background:var(--ink);color:#fff;
+      border-radius:var(--radius);padding:18px;display:flex;justify-content:space-between;gap:15px;align-items:center
+    }
+    .footer-box a{background:var(--yellow);color:var(--ink);border:var(--border);padding:7px 10px;font-weight:1000}
+    @media(max-width:900px){
+      .hero-grid,.about,.contact{grid-template-columns:1fr}
+      .grid3{grid-template-columns:repeat(2,1fr)}
+      .hero-card{transform:none}
+    }
+    @media(max-width:650px){
+      .nav{align-items:flex-start;flex-direction:column}
+      .navlinks{width:100%}
+      .navlinks a{flex:1;text-align:center;font-size:.88rem}
+      .hero{padding-top:55px}
+      .grid3,.achievements,.stats{grid-template-columns:1fr}
+      .timeline-item{grid-template-columns:1fr}
+      h1{font-size:4rem}
+      .footer-box{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="logo" href="#top">VINN.</a>
+    <div class="navlinks">
+      <a href="#about">ABOUT</a>
+      <a href="#projects">PROJECTS</a>
+      <a href="#achievements">WINS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </nav>
+
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="sticker">TKJ × CYBER × AEROSPACE</span>
+          <h1>BUILD.<br>BREAK.<br>LAUNCH.</h1>
+          <p>
+            I'm Vinn — a vocational student who likes turning weird ideas into real projects.
+            My playground sits somewhere between networking, cybersecurity, software, and aerospace.
+          </p>
+          <div class="cta">
+            <a class="btn" href="#projects">SEE MY WORK ↓</a>
+            <a class="btn secondary" href="#contact">LET'S CONNECT</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="terminal">
+            <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="code-line"><span class="prompt">$</span> whoami</div>
+            <div class="code-line"><span class="keyword">role</span> = <span class="value">"TKJ / Builder"</span></div>
+            <div class="code-line"><span class="keyword">focus</span> = <span class="value">["Cybersecurity", "Aerospace"]</span></div>
+            <div class="code-line"><span class="keyword">tools</span> = <span class="value">["Kali", "Fusion 360", "OpenRocket"]</span></div>
+            <div class="code-line"><span class="keyword">status</span> = <span class="value">"still shipping"</span></div>
+            <div class="code-line">&nbsp;</div>
+            <div class="code-line"><span class="prompt">$</span> ./next_big_thing.sh</div>
+            <div class="code-line"><span class="value">→ launch in progress...</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>WHO'S THIS GUY?</h2>
+        <span class="tag">01 / ABOUT</span>
+      </div>
+
+      <div class="about">
+        <div class="card yellow">
+          <h3>Curious by default.</h3>
+          <p>
+            I’m a TKJ student who enjoys learning by building: breaking down systems,
+            testing ideas, making simulations, and shipping small experiments until they become real projects.
+          </p>
+          <p>
+            Right now, I’m especially interested in cybersecurity, networking, web development,
+            rockets, flight simulation, and future aerospace systems.
+          </p>
+          <div class="chips">
+            <span class="chip">Networking</span>
+            <span class="chip">Linux</span>
+            <span class="chip">Cybersecurity</span>
+            <span class="chip">Web</span>
+            <span class="chip">3D Design</span>
+            <span class="chip">Rocketry</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Current toolbox</h3>
+          <div class="chips">
+            <span class="chip">Kali Linux</span>
+            <span class="chip">VS Code</span>
+            <span class="chip">Fusion 360</span>
+            <span class="chip">OpenRocket</span>
+            <span class="chip">AutoCAD</span>
+            <span class="chip">HTML / CSS / JS</span>
+            <span class="chip">WordPress</span>
+            <span class="chip">Git</span>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>90.89</b>avg. sem 1–4</div>
+            <div class="stat"><b>27+</b>NASA VDP findings explored</div>
+            <div class="stat"><b>4</b>competition fields</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="section-head">
+        <h2>SELECTED BUILDS</h2>
+        <span class="tag">02 / PROJECTS</span>
+      </div>
+
+      <div class="grid3">
+        <article class="card project">
+          <div class="num" style="background:var(--cyan)">01</div>
+          <h3>Rocket Lab</h3>
+          <p>
+            Rocket concepts and flight simulations using OpenRocket, with stability checks,
+            altitude targets, and iterative design work.
+          </p>
+          <div class="bottom">
+            <span class="chip">OpenRocket</span>
+            <a href="#" class="mini-btn" target="_blank" rel="noopener noreferrer">AEROSPACE ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="num" style="background:var(--pink)">02</div>
+          <h3>Artemis-1 Concept</h3>
+          <p>
+            3D modeling exploration for an Artemis-1 inspired rocket design in Fusion 360,
+            built as a portfolio and engineering-study project.
+          </p>
+          <div class="bottom">
+            <span class="chip">Fusion 360</span>
+            <a href="#" class="mini-btn" target="_blank" rel="noopener noreferrer">DESIGN ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="num" style="background:var(--green)">03</div>
+          <h3>Game Top-Up Store</h3>
+          <p>
+            A web store experiment with game categories, supplier/API integration planning,
+            and a frontend optimized for a simple buying flow.
+          </p>
+          <div class="bottom">
+            <span class="chip">HTML / JS</span>
+            <a href="https://lev1annstore-id.vercel.app" class="mini-btn" target="_blank" rel="noopener noreferrer">WEB ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="num" style="background:var(--yellow)">04</div>
+          <h3>Cyber Research</h3>
+          <p>
+            Practical security research and vulnerability reporting, including structured
+            recon, validation, and responsible disclosure workflows.
+          </p>
+          <div class="bottom">
+            <span class="chip">Kali Linux</span>
+            <a href="#" class="mini-btn" target="_blank" rel="noopener noreferrer">SECURITY ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="num" style="background:var(--orange)">05</div>
+          <h3>Network Lab</h3>
+          <p>
+            Hands-on networking and infrastructure work: monitoring, LAN troubleshooting,
+            service checks, and keeping systems observable.
+          </p>
+          <div class="bottom">
+            <span class="chip">TKJ</span>
+            <a href="#" class="mini-btn" target="_blank" rel="noopener noreferrer">NETWORK ↗</a>
+          </div>
+        </article>
+
+        <article class="card project">
+          <div class="num" style="background:var(--cyan)">06</div>
+          <h3>Orbit Ideas</h3>
+          <p>
+            Early concepts around satellites, orbital mechanics, Hohmann transfer,
+            stage separation, and visual trajectory dashboards.
+          </p>
+          <div class="bottom">
+            <span class="chip">Space Systems</span>
+            <a href="#" class="mini-btn" target="_blank" rel="noopener noreferrer">RESEARCH ↗</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="achievements">
+      <div class="section-head">
+        <h2>PROOF I TOUCH GRASS</h2>
+        <span class="tag">03 / WINS</span>
+      </div>
+
+      <div class="achievements">
+        <div class="achievement">
+          <div class="badge">🏆</div>
+          <div>
+            <h3>National Competition Podium</h3>
+            <p>3rd place in PKN at JNSC 2.0, SMA/SMK category.</p>
+          </div>
+        </div>
+
+        <div class="achievement">
+          <div class="badge">🚀</div>
+          <div>
+            <h3>IAAC Prefinal</h3>
+            <p>Reached the pre-final round in an international aerospace competition.</p>
+          </div>
+        </div>
+
+        <div class="achievement">
+          <div class="badge">🛰</div>
+          <div>
+            <h3>NASA VDP Research</h3>
+            <p>Participated in vulnerability research and responsible disclosure on NASA assets.</p>
+          </div>
+        </div>
+
+        <div class="achievement">
+          <div class="badge">💻</div>
+          <div>
+            <h3>Cybersecurity Focus</h3>
+            <p>Hands-on experience with Linux security tooling, recon workflows, and technical challenges.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>THE TIMELINE</h2>
+        <span class="tag">04 / JOURNEY</span>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="year">NOW</div>
+          <div class="card green">
+            <h3>Build → Learn → Repeat</h3>
+            <p>Balancing TKJ, cybersecurity projects, competitions, web experiments, and aerospace work.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="year">2026</div>
+          <div class="card">
+            <h3>More competitions. More experiments.</h3>
+            <p>Going deeper into cyber, geography, language competitions, and aerospace engineering.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="year">NEXT</div>
+          <div class="card pink">
+            <h3>Space systems & bigger builds</h3>
+            <p>Long-term direction: aerospace engineering, rocket systems, satellites, and serious engineering projects.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <h2>LET'S MAKE SOMETHING WEIRD.</h2>
+        <span class="tag">05 / CONTACT</span>
+      </div>
+
+      <div class="contact">
+        <div class="card yellow">
+          <p class="big">Got a project, competition, or collab?</p>
+          <p>
+            Replace the links on this page with your real socials and email,
+            then push it straight to GitHub + Vercel.
+          </p>
+          <div class="cta">
+            <a class="btn secondary" href="mailto:yourmail@example.com">EMAIL ME ↗</a>
+            <a class="btn secondary" href="https://github.com/" target="_blank" rel="noreferrer">GITHUB ↗</a>
+            <a class="btn secondary" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LINKEDIN ↗</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Quick intro</h3>
+          <p><b>Name:</b> Vinn</p>
+          <p><b>Field:</b> TKJ / Cybersecurity / Aerospace</p>
+          <p><b>Based in:</b> Indonesia</p>
+          <p><b>Currently:</b> Building, learning, competing.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="footer-box">
+      <span>© 2026 VINN. Built with HTML, CSS & too much curiosity.</span>
+      <a href="#top">BACK TO TOP ↑</a>
+    </div>
+  </footer>
+</body>
+</html>

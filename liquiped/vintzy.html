@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vincentt - Liquipedia Mobile Legends Wiki</title>
+    <style>
+        :root {
+            --bg-main: #13171c;
+            --bg-content: #182026;
+            --bg-nav: #0b1116;
+            --bg-box-header: #004377;
+            --bg-box-content: #101c26;
+            --bg-table-header: #222d35;
+            --text-main: #e2e8f0;
+            --text-muted: #a0aec0;
+            --link-color: #57a5ff;
+            --accent-gold: #ffcc00;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        /* Top Navbar Replica */
+        .navbar {
+            background-color: var(--bg-nav);
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            border-bottom: 2px solid #1a2229;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: bold;
+        }
+        .nav-logo {
+            color: #fff;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .nav-logo span {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: block;
+        }
+
+        /* Main Container Layout */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            gap: 20px;
+            padding: 0 15px;
+        }
+
+        .main-content {
+            flex: 1;
+            background-color: var(--bg-content);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-top: 0;
+            border-bottom: 1px solid #324354;
+            padding-bottom: 5px;
+        }
+
+        h2 {
+            font-size: 20px;
+            border-bottom: 1px solid #324354;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Achievements Table */
+        .achievements-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .achievements-table th {
+            background-color: var(--bg-table-header);
+            text-align: left;
+            padding: 8px;
+            font-weight: bold;
+            border: 1px solid #324354;
+        }
+        .achievements-table td {
+            padding: 8px;
+            border: 1px solid #324354;
+            background-color: #1c2630;
+        }
+        .place-gold {
+            background-color: var(--accent-gold) !important;
+            color: #000;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 3px;
+        }
+
+        /* Right Side Infobox Replica */
+        .infobox {
+            width: 300px;
+            background-color: var(--bg-box-content);
+            border: 1px solid #22313f;
+            border-radius: 4px;
+            align-self: flex-start;
+        }
+        .infobox-header {
+            background-color: var(--bg-box-header);
+            text-align: center;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .infobox-row {
+            display: flex;
+            padding: 8px;
+            border-bottom: 1px solid #1a2733;
+        }
+        .infobox-label {
+            width: 40%;
+            color: var(--text-muted);
+            font-weight: bold;
+            text-align: right;
+            padding-right: 15px;
+        }
+        .infobox-value {
+            width: 60%;
+        }
+        .infobox-section-title {
+            background-color: #0d2336;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 13px;
+            color: var(--link-color);
+        }
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 12px;
+            font-size: 12px;
+            border-bottom: 1px solid #1a2733;
+        }
+        .history-date {
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navbar -->
+    <div class="navbar">
+        <div class="nav-left">
+            <div class="nav-logo">
+                ✨ liquipedia
+                <span>Mobile Legends</span>
+            </div>
+            <div style="color: var(--text-muted); font-size: 13px; margin-left: 20px; display: flex; gap: 15px;">
+                <span>Trending</span>
+                <span>Tournaments</span>
+                <span>Contribute</span>
+            </div>
+        </div>
+        <div style="color: var(--text-muted);">
+            <span>Search 🔍</span>
+        </div>
+    </div>
+
+    <!-- Container Content -->
+    <div class="container">
+        
+        <!-- Left Main Content -->
+        <div class="main-content">
+            <h1>vincentt</h1>
+            <p>
+                Vincent "<b>vincentt</b>" (born 2000s) is an <a href="#">Indonesian</a> player who is currently recognized as an elite cyber security specialist and former competitive mobile gaming player. He has achieved national prominence as a trusted security researcher and is currently a designated delegate representing the <a href="#">Kabupaten Bogor</a> region for the <a href="#">BSSN</a> VVIP Program.
+            </p>
+
+            <h2>Achievements</h2>
+            <table class="achievements-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Place</th>
+                        <th>Tier</th>
+                        <th>Tournament</th>
+                        <th>Team</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2026-07-23</td>
+                        <td class="place-gold">VVIP</td>
+                        <td>National</td>
+                        <td>BSSN VVIP-Program Consolidation</td>
+                        <td>Kab. Bogor Delegate</td>
+                    </tr>
+                    <tr>
+                        <td>2026-07-17</td>
+                        <td class="place-gold">VDP</td>
+                        <td>Global</td>
+                        <td>U.S. Military Cyber Command Vulnerability Disclosure</td>
+                        <td>Independent Threat Hunter</td>
+                    </tr>
+                    <tr>
+                        <td>2026-05</td>
+                        <td class="place-gold">4th</td>
+                        <td>Regional</td>
+                        <td>LKS Cyber Security Kabupaten Bogor</td>
+                        <td>Technical Team</td>
+                    </tr>
+                    <tr>
+                        <td>2025/2026</td>
+                        <td class="place-gold">1st</td>
+                        <td>A-Tier</td>
+                        <td>4x Offline Tournaments</td>
+                        <td>EVOS (Trial)</td>
+                    </tr>
+                    <tr>
+                        <td>2025/2026</td>
+                        <td class="place-gold">1st</td>
+                        <td>B-Tier</td>
+                        <td>7x Online Tournaments</td>
+                        <td>EVOS (Trial)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Hardware Profile</h2>
+            <p>
+                Vincent personally deploys and maintains high-specification systems for infrastructure protection and administrative security operations. His primary equipment includes a <b>Lenovo ThinkPad T490</b> and a <b>Lenovo ThinkPad X390 Yoga</b>. For legacy systems testing, he utilizes the <b>PCSX2</b> architecture paired with PlayStation 3 peripheral controllers.
+            </p>
+        </div>
+
+        <!-- Right Side Infobox -->
+        <div class="infobox">
+            <div class="infobox-header">Player Information</div>
+            
+            <div class="infobox-row">
+                <div class="infobox-label">Name:</div>
+                <div class="infobox-value">Vincent</div>
+            </div>
+            <div class="infobox-row">
+                <div class="infobox-label">Romanized:</div>
+                <div class="infobox-value">vincentt</div>
+            </div>
+            <div class="infobox-row">
+                <div class="infobox-label">Nationality:</div>
+                <div class="infobox-value">🇮🇩 Indonesia</div>
+            </div>
+            <div class="infobox-row">
+                <div class="infobox-label">Height:</div>
+                <div class="infobox-value">183 cm</div>
+            </div>
+            <div class="infobox-row">
+                <div class="infobox-label">Status:</div>
+                <div class="infobox-value" style="color: #00ff00; font-weight: bold;">Active</div>
+            </div>
+            <div class="infobox-row">
+                <div class="infobox-label">Role:</div>
+                <div class="infobox-value">Threat Hunter / Infiltrator</div>
+            </div>
+
+            <div class="infobox-section-title">Links</div>
+            <div style="display: flex; justify-content: center; gap: 15px; padding: 10px; font-size: 18px;">
+                <span>🌐</span> <span>🛡️</span> <span>🎮</span> <span>🇷🇺</span>
+            </div>
+
+            <div class="infobox-section-title">History</div>
+            <div class="history-row">
+                <span class="history-date">2025 - 2026</span>
+                <span style="font-weight: bold; color: #3cd070;">🐅 EVOS (Trial)</span>
+            </div>
+            <div class="history-row">
+                <span class="history-date">2026-07 - Pres.</span>
+                <span style="font-weight: bold; color: var(--link-color);">🛡️ BSSN VVIP Ring 1</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

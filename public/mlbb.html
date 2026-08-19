@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up Mobile Legends - lev1nnstore.id</title>
+    <link rel="icon" type="image/png" href="mylog.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- UTILITIES & ROOT THEME --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #fff;
+            padding: 40px 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .order-container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* --- LEFT SIDE: GAME INFO CARD --- */
+        .game-sidebar {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .sidebar-img-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-sidebar p {
+            color: #8c9ba5;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #8c9ba5;
+            margin-bottom: 12px;
+        }
+
+        .info-item i {
+            color: #fccf14;
+            margin-top: 3px;
+        }
+
+        /* --- RIGHT SIDE: FORM AREA --- */
+        .form-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-num {
+            background: #fccf14;
+            color: #0b0e14;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* MLBB ID Input Group Grid */
+        .mlbb-id-group {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #fccf14;
+        }
+
+        .input-sub {
+            color: #8c9ba5;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.5;
+        }
+
+        /* Nominal Grid Item */
+        .nominal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nominal-card {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nominal-card:hover {
+            border-color: #fccf14;
+            transform: translateY(-3px);
+        }
+
+        .nominal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nominal-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 500;
+        }
+
+        .badge-special {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: #4a90e2; /* Biru terang khas tema MLBB */
+            color: #fff;
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-bottom-left-radius: 8px;
+            font-weight: 600;
+        }
+
+        /* Payment List */
+        .payment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .payment-row {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-row:hover {
+            border-color: #fccf14;
+        }
+
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .payment-left i {
+            font-size: 1.1rem;
+            color: #8c9ba5;
+        }
+
+        .payment-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 600;
+        }
+
+        /* --- BANNER KUNING MANJANG DI BAWAH --- */
+        .bottom-action-banner {
+            grid-column: span 2;
+            background: #fccf14;
+            border-radius: 20px;
+            padding: 25px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            box-shadow: 0 8px 30px rgba(252, 207, 20, 0.15);
+        }
+
+        .banner-text h4 {
+            color: #0b0e14;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner-text p {
+            color: #3a4750;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            background: #0b0e14;
+            color: #fccf14;
+            border: 2px solid #0b0e14;
+            border-radius: 14px;
+            padding: 15px 35px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: #0b0e14;
+        }
+
+        /* --- RESPONSIVE FOR HP --- */
+        @media (max-width: 900px) {
+            .order-container {
+                grid-template-columns: 1fr;
+            }
+            .mlbb-id-group {
+                grid-template-columns: 1fr;
+            }
+            .bottom-action-banner {
+                grid-column: span 1;
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="order-container">
+    
+    <aside class="game-sidebar">
+        <div class="sidebar-img-box">
+            <img src="hirara.png" alt="Mobile Legends">
+        </div>
+        <h2>Mobile Legends</h2>
+        <p>Top Up Diamond Mobile Legends: Bang Bang resmi, murah, dan legal aman 100%. Cukup masukkan User ID dan Zone ID Anda, tentukan nominal Diamond, lalu selesaikan pembayaran. Proses otomatis kilat 24 Jam nonstop.</p>
+        
+        <div class="info-list">
+            <div class="info-item">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Proses Instan 1-3 Detik</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Garansi Aman & 100% Legal</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-headset"></i>
+                <span>Layanan CS Aktif 24/7</span>
+            </div>
+        </div>
+    </aside>
+
+    <main class="form-area">
+        
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <h3>Masukkan Data Akun MLBB</h3>
+            </div>
+            <div class="input-box">
+                <div class="mlbb-id-group">
+    <input type="text" id="userId" placeholder="Masukkan User ID" required>
+    <input type="text" id="zoneId" placeholder="Zone ID" required oninput="autoCheck()">
+                </div>
+                <small class="input-sub">Untuk mengetahui User ID Anda, silakan klik ikon profil di pojok kiri atas dalam game. User ID Anda adalah angka panjang yang tertera di sana, sedangkan Zone ID adalah 4-5 angka yang berada di dalam tanda kurung.</small>
+                <div id="resultBox" class="hidden mt-3 p-3 rounded-xl text-sm border font-bold"></div>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <h3>Pilih Nominal Diamond</h3>
+            </div>
+            
+            <div class="nominal-grid">
+                <!-- Paket Weekly Diamond Pass (Single & Stacking) -->
+                <div class="nominal-card" style="border-color: rgba(74, 144, 226, 0.4);">
+                    <div class="badge-special">Paling Laris</div>
+                    <span class="nominal-title">Weekly Diamond Pass</span>
+                    <span class="nominal-price">Rp 26.500</span>
+                </div>
+                <div class="nominal-card" style="border-color: rgba(74, 144, 226, 0.3);">
+                    <span class="nominal-title">2x Weekly Diamond Pass</span>
+                    <span class="nominal-price">Rp 53.000</span>
+                </div>
+                <div class="nominal-card" style="border-color: rgba(74, 144, 226, 0.3);">
+                    <span class="nominal-title">3x Weekly Diamond Pass</span>
+                    <span class="nominal-price">Rp 79.500</span>
+                </div>
+                <div class="nominal-card" style="border-color: rgba(74, 144, 226, 0.3);">
+                    <span class="nominal-title">4x Weekly Diamond Pass</span>
+                    <span class="nominal-price">Rp 106.000</span>
+                </div>
+                <div class="nominal-card" style="border-color: rgba(74, 144, 226, 0.4);">
+                    <div class="badge-special">Hemat Bulanan</div>
+                    <span class="nominal-title">5x Weekly Diamond Pass</span>
+                    <span class="nominal-price">Rp 132.500</span>
+                </div>
+
+                <!-- Daftar Harga Member (Update Juli 2026) -->
+<div class="nominal-card">
+    <span class="nominal-title">5 Diamonds (5+0)</span>
+    <span class="nominal-price">Rp 1.452</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">10 Diamonds (10+0)</span>
+    <span class="nominal-price">Rp 2.904</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">12 Diamonds (11+1)</span>
+    <span class="nominal-price">Rp 3.387</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">15 Diamonds (15+0)</span>
+    <span class="nominal-price">Rp 4.353</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">17 Diamonds (16+1)</span>
+    <span class="nominal-price">Rp 4.578</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">19 Diamonds (17+2)</span>
+    <span class="nominal-price">Rp 5.314</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">22 Diamonds (20+2)</span>
+    <span class="nominal-price">Rp 6.296</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">28 Diamonds (25+3)</span>
+    <span class="nominal-price">Rp 7.724</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">36 Diamonds (33+3)</span>
+    <span class="nominal-price">Rp 9.681</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">44 Diamonds (40+4)</span>
+    <span class="nominal-price">Rp 11.536</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">54 Diamonds (50+4)</span>
+    <span class="nominal-price">Rp 14.434</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">59 Diamonds (53+6)</span>
+    <span class="nominal-price">Rp 15.449</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">64 Diamonds (58+6)</span>
+    <span class="nominal-price">Rp 16.825</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">71 Diamonds (64+7)</span>
+    <span class="nominal-price">Rp 18.808</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">85 Diamonds (77+8)</span>
+    <span class="nominal-price">Rp 22.198</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">113 Diamonds (102+11)</span>
+    <span class="nominal-price">Rp 29.823</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">128 Diamonds (117+12)</span>
+    <span class="nominal-price">Rp 33.678</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">148 Diamonds (134+14)</span>
+    <span class="nominal-price">Rp 38.435</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">170 Diamonds (154+16)</span>
+    <span class="nominal-price">Rp 44.229</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">176 Diamonds (160+17)</span>
+    <span class="nominal-price">Rp 46.159</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">184 Diamonds (166+18)</span>
+    <span class="nominal-price">Rp 48.016</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">210 Diamonds (190+20)</span>
+    <span class="nominal-price">Rp 54.853</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">222 Diamonds (201+21)</span>
+    <span class="nominal-price">Rp 57.497</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">220 Diamonds (200+20)</span>
+    <span class="nominal-price">Rp 57.995</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">240 Diamonds (217+23)</span>
+    <span class="nominal-price">Rp 62.330</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">277 Diamonds (251+26)</span>
+    <span class="nominal-price">Rp 71.980</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">284 Diamonds (257+27)</span>
+    <span class="nominal-price">Rp 73.845</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">296 Diamonds (256+40)</span>
+    <span class="nominal-price">Rp 76.642</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">300 Diamonds (261+40)</span>
+    <span class="nominal-price">Rp 78.097</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">332 Diamonds (289+43)</span>
+    <span class="nominal-price">Rp 86.331</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">340 Diamonds (296+44)</span>
+    <span class="nominal-price">Rp 88.611</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">355 Diamonds (309+46)</span>
+    <span class="nominal-price">Rp 92.290</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">370 Diamonds (324+46)</span>
+    <span class="nominal-price">Rp 95.812</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">384 Diamonds (336+48)</span>
+    <span class="nominal-price">Rp 99.670</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">453 Diamonds (408+45)</span>
+    <span class="nominal-price">Rp 118.154</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">568 Diamonds (503+65)</span>
+    <span class="nominal-price">Rp 144.696</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">642 Diamonds (571+71)</span>
+    <span class="nominal-price">Rp 163.332</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">716 Diamonds (637+79)</span>
+    <span class="nominal-price">Rp 182.566</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">792 Diamonds (707+85)</span>
+    <span class="nominal-price">Rp 202.902</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">875 Diamonds (774+101)</span>
+    <span class="nominal-price">Rp 221.840</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">963 Diamonds (851+109)</span>
+    <span class="nominal-price">Rp 239.486</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1000 Diamonds (887+113)</span>
+    <span class="nominal-price">Rp 249.215</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1045 Diamonds (912+133)</span>
+    <span class="nominal-price">Rp 260.086</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1136 Diamonds (990+146)</span>
+    <span class="nominal-price">Rp 284.504</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1159 Diamonds (1031+128)</span>
+    <span class="nominal-price">Rp 290.559</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1220 Diamonds (1083+138)</span>
+    <span class="nominal-price">Rp 306.434</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1506 Diamonds (1335+172)</span>
+    <span class="nominal-price">Rp 379.484</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">1704 Diamonds (1509+195)</span>
+    <span class="nominal-price">Rp 428.882</span>
+</div>
+<div class="nominal-card">
+    <span class="nominal-title">2010 Diamonds (1708+302)</span>
+    <span class="nominal-price">Rp 478.742</span>
+</div>
+            </div>
+        </section>
+
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">3</div>
+                <h3>Pilih Metode Pembayaran</h3>
+            </div>
+            
+            <div class="payment-list">
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>QRIS (All E-Wallet)</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>DANA</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Virtual Account</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div class="bottom-action-banner">
+        <div class="banner-text">
+            <h4>Sudah Selesai Mengisi Data?</h4>
+            <p>Pastikan User ID, Zone ID, dan nominal pesanan Diamond Anda sudah sesuai sebelum melanjutkan pembayaran.</p>
+        </div>
+        <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Top Up Sekarang
+        </button>
+    </div>
+
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nominalCards = document.querySelectorAll('.nominal-card');
+        nominalCards.forEach(card => {
+            card.addEventListener('click', function() {
+                nominalCards.forEach(c => {
+                    c.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    c.style.background = '#182030';
+                });
+                this.style.borderColor = '#fccf14';
+                this.style.background = 'rgba(252, 207, 20, 0.05)';
+                
+                const title = this.querySelector('.nominal-title').innerText;
+                const price = this.querySelector('.nominal-price').innerText;
+                console.log('Nominal Dipilih:', title, '-', price);
+            });
+        });
+
+        const paymentRows = document.querySelectorAll('.payment-row');
+        paymentRows.forEach(row => {
+            row.addEventListener('click', function() {
+                paymentRows.forEach(r => {
+                    r.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                    r.style.background = '#182030';
+                });
+                this.style.borderColor = '#fccf14';
+                this.style.background = 'rgba(252, 207, 20, 0.05)';
+
+                const method = this.querySelector('.payment-left span').innerText;
+                console.log('Metode Pembayaran Dipilih:', method);
+            });
+        });
+
+        // 3. Logik Pas Tombol Top Up Sekarang Diklik (Biar 5000 request lu keproses, Cuy!)
+        const btnTopup = document.querySelector('.submit-btn'); // Kalau tombol lu pake id, ganti jadi '#btn-topup'
+        if (btnTopup) {
+            btnTopup.addEventListener('click', async function() {
+                console.log('Tombol ditekan, memproses transaksi...');
+                
+                const targetId = document.getElementById('target-id')?.value;
+                const zoneId = document.getElementById('zone-id')?.value; // Hapus baris ini kalau game-nya gak pakai zone ID
+
+                try {
+                    const response = await fetch('/api/vipayment-webhook', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            targetId: targetId,
+                            zoneId: zoneId
+                        })
+                    });
+
+                    const result = await response.json();
+    console.log('Respon Webhook:', result);
+    alert('Pesanan diproses! Silahkan cek kelanjutan pembayaran.');
+    
+    // Ambil ulang nilai input dari form biar gak undefined, Cuy!
+    const inputTarget = document.getElementById('target-id')?.value || '-';
+    const inputZone = document.getElementById('zone-id')?.value || '-';
+    const priceChosen = document.querySelector('input[name="nominal"]:checked')?.value || '20000'; 
+    const gameName = "Mobile Legends";
+
+    // Kirim data yang udah valid ke URL parameter
+    window.location.href = `/payment.html?orderId=${result.trxid || 'LVN-' + Date.now()}&game=${encodeURIComponent(gameName)}&userId=${encodeURIComponent(inputTarget + ' (' + inputZone + ')')}&price=${priceChosen}`;
+                } catch (error) {
+                    console.error('Gagal kirim data topup:', error);
+                    alert('Waduh error, Cuy!');
+                }
+            });
+        }
+
+    });
+</script>
+<script>
+let timer;
+
+function autoCheck() {
+  clearTimeout(timer);
+  const userId = document.getElementById("userId").value;
+  const zoneId = document.getElementById("zoneId").value;
+
+  if (userId.length >= 8 && zoneId.length >= 4) {
+    timer = setTimeout(() => {
+      checkNicknameMLBB(userId, zoneId);
+    }, 500);
+  }
+}
+
+async function checkNicknameMLBB(userId, zoneId) {
+  const resultBox = document.getElementById("resultBox");
+  
+  resultBox.classList.remove("hidden");
+  resultBox.className = "mt-3 p-3 bg-yellow-500/10 border border-yellow-500/40 rounded-xl text-yellow-400 text-sm animate-pulse";
+  resultBox.innerText = "⏳ Mengecek Nickname...";
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/check?game=mobile-legends&user_id=${userId}&zone_id=${zoneId}`);
+    const data = await res.json();
+
+    if (data.success) {
+      resultBox.className = "mt-3 p-3 bg-green-500/10 border border-green-500/40 rounded-xl text-green-400 text-sm flex justify-between items-center";
+      resultBox.innerHTML = `<span>Nickname:</span> <span class="font-bold text-white text-base">${data.nickname}</span>`;
+    } else {
+      resultBox.className = "mt-3 p-3 bg-red-500/10 border border-red-500/40 rounded-xl text-red-400 text-sm";
+      resultBox.innerText = "❌ " + (data.message || "ID tidak ditemukan!");
+    }
+  } catch (err) {
+    resultBox.className = "mt-3 p-3 bg-red-500/10 border border-red-500/40 rounded-xl text-red-400 text-sm";
+    resultBox.innerText = "⚠️ Server Python offline! Pastikan 'python app.py' jalan.";
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Up EA SPORTS FC Mobile - lev1nnstore.id</title>
+    <link rel="icon" type="image/png" href="mylog.png">
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- UTILITIES & ROOT THEME --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #fff;
+            padding: 40px 4%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .order-container {
+            width: 100%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        /* --- LEFT SIDE: GAME INFO CARD --- */
+        .game-sidebar {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .sidebar-img-box {
+            width: 100%;
+            height: 180px;
+            border-radius: 14px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .game-sidebar h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-sidebar p {
+            color: #8c9ba5;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .info-list {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #8c9ba5;
+            margin-bottom: 12px;
+        }
+
+        .info-item i {
+            color: #fccf14;
+            margin-top: 3px;
+        }
+
+        /* --- RIGHT SIDE: FORM AREA --- */
+        .form-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .form-section {
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-num {
+            background: #fccf14;
+            color: #0b0e14;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .section-header h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        /* Input Box */
+        .input-box input {
+            width: 100%;
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 14px 20px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-box input:focus {
+            border-color: #fccf14;
+        }
+
+        .input-sub {
+            color: #8c9ba5;
+            font-size: 0.8rem;
+            margin-top: 8px;
+            display: block;
+            line-height: 1.5;
+        }
+
+        /* Nominal Grid Item */
+        .nominal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .nominal-card {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nominal-card:hover {
+            border-color: #fccf14;
+            transform: translateY(-3px);
+        }
+
+        .nominal-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .nominal-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 500;
+        }
+
+        /* Payment List */
+        .payment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .payment-row {
+            background: #182030;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-row:hover {
+            border-color: #fccf14;
+        }
+
+        .payment-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .payment-left i {
+            font-size: 1.1rem;
+            color: #8c9ba5;
+        }
+
+        .payment-price {
+            font-size: 0.85rem;
+            color: #fccf14;
+            font-weight: 600;
+        }
+
+        /* --- BANNER KUNING MANJANG DI BAWAH --- */
+        .bottom-action-banner {
+            grid-column: span 2;
+            background: #fccf14;
+            border-radius: 20px;
+            padding: 25px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 15px;
+            box-shadow: 0 8px 30px rgba(252, 207, 20, 0.15);
+        }
+
+        .banner-text h4 {
+            color: #0b0e14;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner-text p {
+            color: #3a4750;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .submit-btn {
+            background: #0b0e14;
+            color: #fccf14;
+            border: 2px solid #0b0e14;
+            border-radius: 14px;
+            padding: 15px 35px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background: transparent;
+            color: #0b0e14;
+        }
+
+        /* --- RESPONSIVE FOR HP --- */
+        @media (max-width: 900px) {
+            .order-container {
+                grid-template-columns: 1fr;
+            }
+            .bottom-action-banner {
+                grid-column: span 1;
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="order-container">
+    
+    <!-- SISI KIRI: Side Info -->
+    <aside class="game-sidebar">
+        <div class="sidebar-img-box">
+            <img src="fcmobile.jpg" alt="EA SPORTS FC Mobile">
+        </div>
+        <h2>FC Mobile</h2>
+        <p>Top Up FC Points & Silver EA SPORTS FC Mobile resmi dan termurah se-Indonesia. Cukup masukkan UID Anda, pilih nominal produk, dan lakukan pembayaran otomatis instan 24 Jam.</p>
+        
+        <div class="info-list">
+            <div class="info-item">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Proses Instan 1-3 Detik</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Garansi Aman & 100% Legal</span>
+            </div>
+            <div class="info-item">
+                <i class="fa-solid fa-headset"></i>
+                <span>Layanan CS Aktif 24/7</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- SISI KANAN: Form Berurutan ke Bawah -->
+    <main class="form-area">
+        
+        <!-- NO 1: DATA AKUN -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">1</div>
+                <h3>Masukkan ID</h3>
+            </div>
+            <div class="input-box">
+                <input type="text" id="user-id" placeholder="Contoh: 1234567890" required>
+                <small class="input-sub">Buka menu pengaturan game EA SPORTS FC Mobile Anda, lalu salin UID Anda yang tertera di sana.</small>
+            </div>
+        </section>
+
+        <!-- NO 2: PILIHAN NOMINAL -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">2</div>
+                <h3>Pilih Nominal Produk</h3>
+            </div>
+            
+            <div class="nominal-grid">
+                <!-- Data dari image_6f0d98.jpg -->
+                <div class="nominal-card">
+                    <span class="nominal-title">40 FC POINTS</span>
+                    <span class="nominal-price">Rp 6.325</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">39 Silver</span>
+                    <span class="nominal-price">Rp 6.325</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">100 FC POINTS</span>
+                    <span class="nominal-price">Rp 15.570</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">99 Silver</span>
+                    <span class="nominal-price">Rp 15.570</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">520 FC POINTS</span>
+                    <span class="nominal-price">Rp 76.878</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">499 Silver</span>
+                    <span class="nominal-price">Rp 76.878</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1070 FC POINTS</span>
+                    <span class="nominal-price">Rp 154.729</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">999 Silver</span>
+                    <span class="nominal-price">Rp 154.729</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">2200 FC POINTS</span>
+                    <span class="nominal-price">Rp 320.162</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">1999 Silver</span>
+                    <span class="nominal-price">Rp 320.162</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">5750 FC POINTS</span>
+                    <span class="nominal-price">Rp 777.335</span>
+                </div>
+
+                <!-- Data dari image_6f0dbc.png -->
+                <div class="nominal-card">
+                    <span class="nominal-title">4999 Silver</span>
+                    <span class="nominal-price">Rp 777.535</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">12000 FC POINTS</span>
+                    <span class="nominal-price">Rp 1.556.043</span>
+                </div>
+                <div class="nominal-card">
+                    <span class="nominal-title">9999 Silver</span>
+                    <span class="nominal-price">Rp 1.556.043</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- NO 3: METODE PEMBAYARAN -->
+        <section class="form-section">
+            <div class="section-header">
+                <div class="section-num">3</div>
+                <h3>Pilih Metode Pembayaran</h3>
+            </div>
+            
+            <div class="payment-list">
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-qrcode"></i>
+                        <span>QRIS (All E-Wallet)</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-wallet"></i>
+                        <span>DANA</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+                <div class="payment-row">
+                    <div class="payment-left">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        <span>Virtual Account</span>
+                    </div>
+                    <span class="payment-price">Otomatis</span>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BANNER KUNING SAKTI MANJANG DI PALING BAWAH -->
+    <div class="bottom-action-banner">
+        <div class="banner-text">
+            <h4>Sudah Selesai Mengisi Data?</h4>
+            <p>Pastikan UID dan pilihan nominal produk Anda sudah sesuai sebelum melanjutkan.</p>
+        </div>
+        <button type="submit" class="submit-btn">
+            <i class="fa-solid fa-cart-shopping"></i> Top Up Sekarang
+        </button>
+    </div>
+
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Variabel buat nampung pilihan user global
+    let selectedNominal = '';
+    let selectedPayment = '';
+
+    // 1. Logik Pilih Nominal
+    const nominalCards = document.querySelectorAll('.nominal-card'); // pastikan class kartu nominal lu ini
+    nominalCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Reset semua border kartu nominal dulu
+            nominalCards.forEach(c => {
+                c.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                c.style.background = '#182030';
+            });
+            // Kasih border kuning ke yang diklik
+            this.style.borderColor = '#fccf14';
+            this.style.background = 'rgba(252, 207, 20, 0.05)';
+
+            // Ambil teks nominalnya
+            const title = this.querySelector('.nominal-title').innerText;
+            const price = this.querySelector('.nominal-price').innerText;
+            console.log('Nominal Dipilih:', title, '-', price);
+            
+            // Simpan ke variabel global
+            selectedNominal = title;
+        });
+    });
+
+    // 2. Logik Pilih Metode Pembayaran
+    const paymentRows = document.querySelectorAll('.payment-row');
+    paymentRows.forEach(row => {
+        row.addEventListener('click', function() {
+            paymentRows.forEach(r => {
+                r.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+                r.style.background = '#182030';
+            });
+            this.style.borderColor = '#fccf14';
+            this.style.background = 'rgba(252, 207, 20, 0.05)';
+
+            const method = this.querySelector('.payment-left span').innerText;
+            console.log('Metode Pembayaran Dipilih:', method);
+            
+            // Simpan ke variabel global
+            selectedPayment = method;
+        });
+    });
+
+    // 3. FUNCTION FINAL ORDER (Tombol Top Up Sekarang)
+    const btnTopup = document.querySelector('.submit-btn'); // Kalau tombol lu pake id, ganti jadi '#btn-topup'
+    if (btnTopup) {
+        btnTopup.addEventListener('click', async function() {
+            console.log('Tombol ditekan, memproses Final Order...');
+            
+            // Ambil input ID dari user
+            const targetId = document.getElementById('user-id').value;
+            
+
+            // Validasi: Cek apakah user udah ngisi semua data
+            if (!targetId) {
+                alert('Please enter your ID first.');
+                return;
+            }
+            if (!selectedNominal) {
+                alert('Pilih nominal produknya Dulu!');
+                return;
+            }
+            if (!selectedPayment) {
+                alert('Select a payment method first.');
+                return;
+            }
+
+            // Jika lolos validasi, langsung tembak backend Vercel
+            try {
+                const response = await fetch('/api/doku-checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        targetId: targetId,
+                        zoneId: null,
+                        nominal: selectedNominal,
+                        payment: selectedPayment
+                    })
+                });
+
+                const result = await response.json();
+                console.log('Respon Webhook Sukses:', result);
+                if (result.payment_url) {
+                    alert('Pesanan diproses! Menuju halaman pembayaran DOKU...');
+                    window.location.href = result.payment_url; 
+                } else {
+                    alert('Gagal mendapatkan link pembayaran dari DOKU, Cuy.');
+                }
+            
+            } catch (error) {
+                console.error('Gagal kirim final order:', error);
+                alert('Waduh error pas final order, Cuy!');
+            }
+        });
+    }
+
+});
+</script>
+
+</body>
+</html>
+</body>
+</html>

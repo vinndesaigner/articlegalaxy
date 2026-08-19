@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>COSMOS — Galaxy From Particles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root{
+    --void:#03040a;
+    --panel:rgba(12,16,28,.55);
+    --line:rgba(255,255,255,.1);
+    --ink:#f0f2fa;
+    --ink-soft:#9aa3ba;
+    --ink-faint:#5c6478;
+    --cyan:#5ed6ff;
+    --violet:#9d7bff;
+    --amber:#ffb86b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
+
+  #scene-canvas{
+    position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;
+  }
+  .vignette{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(ellipse at center, transparent 40%, rgba(3,4,10,.85) 100%);
+  }
+
+  main{position:relative;z-index:2;}
+
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:20;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 34px;
+  }
+  .logo{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+    letter-spacing:2px;display:flex;align-items:center;gap:9px;
+  }
+  .logo .ring{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--cyan);}
+  nav .links{display:flex;gap:30px;}
+  nav .links a{font-size:11.5px;color:var(--ink-soft);letter-spacing:1.5px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;}
+  nav .links a:hover{color:var(--cyan);}
+
+  /* Hero */
+  .hero{
+    height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:0 24px;
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cyan);
+    letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(38px,7vw,84px);font-weight:700;line-height:1.02;letter-spacing:-1.5px;
+    background:linear-gradient(180deg,#fff,#c6cbe0 55%,#7d84a0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    margin-bottom:20px;
+  }
+  .hero p{
+    font-size:15.5px;color:var(--ink-soft);max-width:520px;line-height:1.8;margin-bottom:10px;
+  }
+  .scroll-cue{
+    position:absolute;bottom:36px;font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--ink-faint);letter-spacing:2px;display:flex;flex-direction:column;align-items:center;gap:10px;
+  }
+  .scroll-cue .line{width:1px;height:32px;background:linear-gradient(var(--cyan),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+  @keyframes scrollAnim{0%{opacity:0;transform:scaleY(0);}50%{opacity:1;}100%{opacity:0;transform:scaleY(1);}}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+  .section{padding:140px 0;}
+
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:44px;
+    backdrop-filter:blur(18px);
+  }
+  .panel-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:36px;align-items:center;
+  }
+  .panel-photo{
+    aspect-ratio:4/3;border-radius:14px;overflow:hidden;
+    border:1px solid var(--line);position:relative;
+  }
+  .panel-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .panel-photo .credit{
+    position:absolute;bottom:0;left:0;right:0;
+    background:linear-gradient(0deg, rgba(0,0,0,.7), transparent);
+    padding:16px 12px 8px;
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(255,255,255,.75);
+    letter-spacing:.5px;
+  }
+
+  .section-label{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--cyan);
+    letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;
+  }
+  .section-title{
+    font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,38px);
+    font-weight:700;letter-spacing:-1px;margin-bottom:18px;
+  }
+  .section-text{color:var(--ink-soft);font-size:15px;line-height:1.85;max-width:600px;}
+
+  /* Stat readout */
+  .stat-row{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px;
+  }
+  .stat-cell{
+    border-top:1px solid var(--line);padding-top:14px;
+  }
+  .stat-cell b{
+    display:block;font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;color:var(--cyan);
+  }
+  .stat-cell span{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-faint);letter-spacing:1px;
+  }
+
+  /* Objects grid */
+  .object-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:40px;
+  }
+  .object-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;
+    backdrop-filter:blur(18px);
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .object-card:hover{border-color:var(--cyan);transform:translateY(-4px);}
+  .object-photo{
+    aspect-ratio:16/10;overflow:hidden;position:relative;
+  }
+  .object-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .object-body{padding:22px 24px 26px;}
+  .object-icon{
+    width:40px;height:40px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:14px;margin-top:-42px;
+    background:rgba(10,14,24,.75);backdrop-filter:blur(6px);
+    border:1px solid var(--line);position:relative;z-index:1;margin-left:20px;
+  }
+  .object-card h3{font-family:'Space Grotesk',sans-serif;font-size:17px;margin-bottom:10px;}
+  .object-card p{font-size:13.5px;color:var(--ink-soft);line-height:1.7;}
+
+  footer{
+    text-align:center;padding:50px 24px;color:var(--ink-faint);
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:1px;
+  }
+
+  @media(max-width:760px){
+    .object-grid{grid-template-columns:1fr;}
+    .stat-row{grid-template-columns:1fr;}
+    .panel-grid{grid-template-columns:1fr;}
+    .panel{padding:28px;}
+    nav .links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="scene-canvas"></canvas>
+<div class="vignette"></div>
+
+<nav>
+  <div class="logo"><span class="ring"></span> COSMOS</div>
+  <div class="links">
+    <a href="#partikel">Particle</a>
+    <a href="#planet">Planet</a>
+    <a href="#objek">Other Objects</a>
+  </div>
+</nav>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">THE UNIVERSE · FROM MICRO TO MACRO</div>
+    <h1 class="display">From Particles,<br>The Universe Was Born</h1>
+    <p>Every planet you see on this screen is composed of thousands of tiny light points — just like the actual universe, which was born from dust and particles that gradually came together.</p>
+    <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
+  </section>
+
+  <section class="section" id="partikel">
+    <div class="wrap">
+      <div class="panel">
+        <div class="panel-grid">
+          <div>
+            <div class="section-label">01 · MICRO</div>
+            <h2 class="section-title display">Particles Forming the World</h2>
+            <p class="section-text">The planet behind you is not a solid ball — it is rendered from thousands of individual particle points scattered across its surface, each twinkling and moving slowly following the planet's rotation. From a distance, this collection of points merges into a complete shape, just like how primordial cosmic dust gradually came together to form the planets we know today.</p>
+            <div class="stat-row">
+              <div class="stat-cell"><b id="statParticles">0</b><span>TOTAL PARTICLES</span></div>
+              <div class="stat-cell"><b>0.0006</b><span>RAD/FRAME ROTATION</span></div>
+              <div class="stat-cell"><b>3</b><span>OBJECT LAYERS</span></div>
+            </div>
+          </div>
+          <div class="panel-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pillars%20of%20Creation%20(NIRCam%20Image).jpg" alt="Pilar debu dan gas Nebula Elang, tersusun dari partikel gas dan debu kosmik">
+            <div class="credit">NASA, ESA, CSA, STScI — Pilar Nebula Elang (Webb)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="planet">
+    <div class="wrap">
+      <div class="panel">
+        <div class="panel-grid">
+          <div class="panel-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Jupiter-full-disk-photo-NASA.jpg" alt="Foto planet Jupiter diambil oleh wahana antariksa NASA">
+            <div class="credit">NASA/JPL — Jupiter</div>
+          </div>
+          <div>
+            <div class="section-label">02 · PLANET & ORBIT</div>
+            <h2 class="section-title display">Planet, Rings, and Its Satellites</h2>
+            <p class="section-text">In the middle of this small solar system, the main planet is surrounded by a ring of particles that extends along its equatorial plane, similar to Saturn's rings. A small moon orbits in a circular path, continuously moving without stopping — a simple simulation of the gravitational force that keeps every celestial body on its course.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="objek">
+    <div class="wrap">
+      <div class="section-label">03 · MACRO</div>
+      <h2 class="section-title display">Other Objects in the Universe</h2>
+      <p class="section-text">The universe is not just about one planet. Here are some other celestial objects that fill the vastness of space.</p>
+      <div class="object-grid">
+        <div class="object-card">
+          <div class="object-photo">
+            <img src="rosettenebula.jpg" alt="The Trifid Nebula, a cloud of gas and dust where stars are born.">
+          </div>
+          <div class="object-icon">🌌</div>
+          <div class="object-body">
+            <h3>Nebula</h3>
+            <p>A giant cloud of gas and dust in space. Some nebulae are the birthplaces of new stars, while others are the remnants of dead stars.</p>
+          </div>
+        </div>
+        <div class="object-card">
+          <div class="object-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Comet%20Neowise.jpg" alt="Comet NEOWISE with a glowing tail in the night sky">
+          </div>
+          <div class="object-icon">☄️</div>
+          <div class="object-body">
+            <h3>Comet</h3>
+            <p>A chunk of ice and dust that travels around the sun in a very elongated orbit, leaving a glowing tail behind as it approaches the sun's heat.</p>
+          </div>
+        </div>
+        <div class="object-card">
+          <div class="object-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vesta%20from%20Dawn%2C%20July%2018.jpg" alt="Asteroid Vesta photographed by the NASA Dawn spacecraft">
+          </div>
+          <div class="object-icon">🪨</div>
+          <div class="object-body">
+            <h3>Asteroid Belt</h3>
+            <p>A collection of small rocky bodies orbiting between two planets, remnants of material that failed to form a planet.</p>
+          </div>
+        </div>
+        <div class="object-card">
+          <div class="object-photo">
+            <img src="https://commons.wikimedia.org/wiki/Special:FilePath/M51%20whirlpool%20galaxy%20black%20hole.jpg" alt="Spiral Galaxy Whirlpool (M51) results from Hubble Space Telescope photos">
+          </div>
+          <div class="object-icon">🌀</div>
+          <div class="object-body">
+            <h3>Spiral Galaxy</h3>
+            <p>A collection of billions of stars, gas, and dust that form a giant spiral pattern, slowly rotating around their massive center for millions of years.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 COSMOS — A Particle-Based Universe Simulation
+  </footer>
+</main>
+
+<script>
+/* ---------------- THREE.JS SCENE ---------------- */
+const canvas = document.getElementById('scene-canvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 3000);
+camera.position.set(0, 0, 340);
+
+const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+/* ---- Background starfield (deep space, large volume) ---- */
+function buildStarfield(count, spread){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    positions[i*3]   = (Math.random()-0.5)*spread;
+    positions[i*3+1] = (Math.random()-0.5)*spread;
+    positions[i*3+2] = (Math.random()-0.5)*spread - 200;
+    const tint = 0.7 + Math.random()*0.3;
+    colors[i*3]=tint; colors[i*3+1]=tint; colors[i*3+2]=Math.min(1,tint+0.1);
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({
+    size:1.4, vertexColors:true, transparent:true, opacity:0.85,
+    sizeAttenuation:true, depthWrite:false
+  });
+  return new THREE.Points(geo, mat);
+}
+const starfield = buildStarfield(3200, 1800);
+scene.add(starfield);
+
+/* ---- Particle planet (sphere surface points) ---- */
+function buildParticlePlanet(count, radius, colorA, colorB){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  const cA = new THREE.Color(colorA), cB = new THREE.Color(colorB);
+  for(let i=0;i<count;i++){
+    // random point on sphere surface (uniform)
+    const u = Math.random(), v = Math.random();
+    const theta = 2*Math.PI*u;
+    const phi = Math.acos(2*v-1);
+    const r = radius * (0.985 + Math.random()*0.03);
+    const x = r*Math.sin(phi)*Math.cos(theta);
+    const y = r*Math.sin(phi)*Math.sin(theta);
+    const z = r*Math.cos(phi);
+    positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+    const t = Math.random();
+    const c = cA.clone().lerp(cB, t);
+    colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({
+    size:1.9, vertexColors:true, transparent:true, opacity:0.92,
+    sizeAttenuation:true, blending:THREE.AdditiveBlending, depthWrite:false
+  });
+  return new THREE.Points(geo, mat);
+}
+const PLANET_COUNT = 7000;
+const planet = buildParticlePlanet(PLANET_COUNT, 62, '#5ed6ff', '#9d7bff');
+scene.add(planet);
+
+/* ---- Particle ring around planet ---- */
+function buildRing(count, innerR, outerR){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const colors = new Float32Array(count*3);
+  const cA = new THREE.Color('#ffb86b'), cB = new THREE.Color('#5ed6ff');
+  for(let i=0;i<count;i++){
+    const angle = Math.random()*Math.PI*2;
+    const r = innerR + Math.random()*(outerR-innerR);
+    const x = Math.cos(angle)*r;
+    const z = Math.sin(angle)*r;
+    const y = (Math.random()-0.5)*3;
+    positions[i*3]=x; positions[i*3+1]=y; positions[i*3+2]=z;
+    const c = cA.clone().lerp(cB, Math.random());
+    colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({
+    size:1.3, vertexColors:true, transparent:true, opacity:0.75,
+    sizeAttenuation:true, blending:THREE.AdditiveBlending, depthWrite:false
+  });
+  return new THREE.Points(geo, mat);
+}
+const ring = buildRing(2200, 90, 130);
+ring.rotation.x = Math.PI/2.6;
+scene.add(ring);
+
+/* ---- Orbiting moon (small particle sphere) ---- */
+const moon = buildParticlePlanet(900, 12, '#f0f2fa', '#9aa3ba');
+scene.add(moon);
+let moonAngle = 0;
+const moonOrbitRadius = 190;
+
+/* ---- Distant nebula clusters (soft colored clouds) ---- */
+function buildNebulaCluster(count, center, spread, color){
+  const geo = new THREE.BufferGeometry();
+  const positions = new Float32Array(count*3);
+  const c = new THREE.Color(color);
+  const colors = new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    positions[i*3]   = center[0] + (Math.random()-0.5)*spread;
+    positions[i*3+1] = center[1] + (Math.random()-0.5)*spread;
+    positions[i*3+2] = center[2] + (Math.random()-0.5)*spread;
+    colors[i*3]=c.r; colors[i*3+1]=c.g; colors[i*3+2]=c.b;
+  }
+  geo.setAttribute('position', new THREE.BufferAttribute(positions,3));
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.PointsMaterial({
+    size:2.6, vertexColors:true, transparent:true, opacity:0.18,
+    sizeAttenuation:true, blending:THREE.AdditiveBlending, depthWrite:false
+  });
+  return new THREE.Points(geo, mat);
+}
+scene.add(buildNebulaCluster(900, [-420, 120, -650], 400, '#9d7bff'));
+scene.add(buildNebulaCluster(900, [480, -180, -800], 450, '#5ed6ff'));
+
+/* ---- Stat readout ---- */
+const totalParticles = PLANET_COUNT + 2200 + 900 + 3200 + 1800;
+const statEl = document.getElementById('statParticles');
+let counted = 0;
+const countInterval = setInterval(()=>{
+  counted += Math.ceil(totalParticles/60);
+  if(counted >= totalParticles){ counted = totalParticles; clearInterval(countInterval); }
+  statEl.textContent = counted.toLocaleString('id-ID');
+}, 25);
+
+/* ---- Mouse parallax ---- */
+let mouseX = 0, mouseY = 0;
+window.addEventListener('mousemove', (e)=>{
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+});
+
+/* ---- Resize ---- */
+window.addEventListener('resize', ()=>{
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+/* ---- Scroll-based camera pull-back ---- */
+let scrollT = 0;
+window.addEventListener('scroll', ()=>{
+  const max = document.body.scrollHeight - window.innerHeight;
+  scrollT = max > 0 ? window.scrollY / max : 0;
+});
+
+/* ---- Animation loop ---- */
+function animate(){
+  requestAnimationFrame(animate);
+
+  planet.rotation.y += 0.0016;
+  ring.rotation.z += 0.0009;
+  starfield.rotation.y += 0.00006;
+
+  moonAngle += 0.006;
+  moon.position.x = Math.cos(moonAngle) * moonOrbitRadius;
+  moon.position.z = Math.sin(moonAngle) * moonOrbitRadius;
+  moon.position.y = Math.sin(moonAngle*0.6) * 20;
+  moon.rotation.y += 0.01;
+
+  // camera parallax + scroll pull-back
+  const targetX = mouseX * 26;
+  const targetY = -mouseY * 16;
+  camera.position.x += (targetX - camera.position.x) * 0.03;
+  camera.position.y += (targetY - camera.position.y) * 0.03;
+  camera.position.z = 340 + scrollT * 260;
+  camera.lookAt(0,0,0);
+
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+
+</body>
+</html>

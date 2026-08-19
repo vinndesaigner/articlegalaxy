@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Rose for You</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.6)); }
+      50% { filter: drop-shadow(0 0 30px rgba(244, 63, 94, 0.9)); }
+    }
+    .rose-glow {
+      animation: pulse-glow 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-white min-h-screen flex flex-col items-center justify-center p-4 selection:bg-rose-500 selection:text-white">
+
+  <!-- Card Container -->
+  <div class="max-w-sm w-full bg-slate-900/80 backdrop-blur-md border border-rose-500/20 rounded-3xl p-6 text-center shadow-2xl shadow-rose-950/50 flex flex-col items-center">
+    
+    <!-- SVG Mawar dengan Glow Effect -->
+    <div class="relative w-48 h-48 my-4 rose-glow transition-all duration-500 hover:scale-105">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+        <!-- Tangkai & Daun -->
+        <path d="M100 110 C100 150, 110 170, 100 190" stroke="#16a34a" stroke-width="5" stroke-linecap="round"/>
+        <path d="M102 145 C80 140, 70 120, 85 115 C95 125, 100 135, 102 145 Z" fill="#22c55e"/>
+        <path d="M100 160 C120 155, 130 135, 115 130 C105 140, 100 150, 100 160 Z" fill="#15803d"/>
+        
+        <!-- Kelopak Luar Mawar -->
+        <path d="M100 50 C60 50, 50 95, 100 120 C150 95, 140 50, 100 50 Z" fill="#e11d48"/>
+        
+        <!-- Layer Kelopak Dalam -->
+        <path d="M100 60 C75 60, 68 90, 100 108 C132 90, 125 60, 100 60 Z" fill="#f43f5e"/>
+        <path d="M100 68 C83 68, 80 88, 100 100 C120 88, 117 68, 100 68 Z" fill="#fb7185"/>
+        
+        <!-- Kuncup Tengah -->
+        <ellipse cx="100" cy="78" rx="8" ry="12" fill="#fda4af"/>
+      </svg>
+    </div>
+
+    <!-- Pesan Bahasa Rusia untuk Pacar di Samara -->
+    <div class="space-y-2 mt-2">
+      <h1 class="text-2xl font-bold bg-gradient-to-r from-rose-400 via-pink-400 to-red-400 bg-clip-text text-transparent">
+        Это для тебя!
+      </h1>
+      <p class="text-slate-300 text-sm italic font-light">
+        "Ты прекрасна, как эта роза."
+      </p>
+      <p class="text-xs text-slate-500 pt-1">
+        (Kamu secantik bunga mawar ini)
+      </p>
+    </div>
+
+    <!-- Interaktif Button (Bisa diklik buat munculin ucapan ekstra) -->
+    <button onclick="showLoveMessage()" class="mt-6 px-5 py-2.5 bg-rose-600 hover:bg-rose-500 active:scale-95 text-white text-xs font-semibold rounded-full shadow-lg shadow-rose-600/30 transition-all duration-200">
+      Нажми меня! ✨
+    </button>
+
+    <!-- Hidden Message -->
+    <p id="secret-msg" class="hidden text-xs text-rose-300 mt-4 bg-rose-950/40 border border-rose-500/30 p-2.5 rounded-xl transition-all">
+      Скучаю по тебе! До скорой встречи ❤️
+      <br><span class="text-[10px] text-slate-400">(Kangen kamu! Sampai ketemu lagi)</span>
+    </p>
+
+  </div>
+
+  <script>
+    function showLoveMessage() {
+      const msg = document.getElementById('secret-msg');
+      msg.classList.toggle('hidden');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kiooOway. - Liquipedia Mobile Legends: Bang Bang Wiki</title>
+ <link rel="icon" type="image/png" href="logo.png">
+<style>
+  :root{
+    --bg:#101418;
+    --page:#181c20;
+    --border:#3a3f44;
+    --border-light:#2a2e33;
+    --ink:#e8e9ea;
+    --ink-soft:#a3a9ae;
+    --link:#6699ff;
+    --infobox-head:#0d0f11;
+    --infobox-row:#1c2024;
+    --infobox-row-alt:#22262b;
+    --accent:#5b8cff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:Arial, Helvetica, 'Liberation Sans', sans-serif;
+    font-size:14px;line-height:1.6;
+  }
+  a{color:var(--link);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .topbar{
+    background:#1c2024;border-bottom:1px solid var(--border);
+    padding:8px 20px;font-size:12px;color:var(--ink-soft);
+    display:flex;justify-content:space-between;
+  }
+  .topbar b{color:var(--ink);}
+
+  .page-wrap{max-width:1100px;margin:0 auto;background:var(--page);
+    border-left:1px solid var(--border-light);border-right:1px solid var(--border-light);
+    padding:20px 28px 50px;min-height:100vh;
+  }
+
+  .page-title{
+    font-family:'Linux Libertine', Georgia, serif;
+    font-size:28px;font-weight:normal;
+    border-bottom:3px solid var(--border-light);
+    padding-bottom:8px;margin-bottom:6px;
+    display:flex;align-items:baseline;gap:10px;
+  }
+  .page-subtitle{font-size:12px;color:var(--ink-soft);margin-bottom:18px;}
+
+  .content-grid{display:flow-root;}
+
+  /* Infobox */
+  .infobox{
+    float:right;width:300px;margin:0 0 20px 24px;
+    border:1px solid var(--border);background:var(--infobox-row);
+    font-size:13px;
+  }
+  .infobox-header{
+    background:var(--infobox-head);color:#fff;
+    text-align:center;padding:8px 10px;font-weight:bold;font-size:15px;
+  }
+  .infobox-image{
+    background:#26292d;height:220px;
+    display:flex;align-items:center;justify-content:center;
+    color:#6b7075;font-size:13px;text-align:center;flex-direction:column;gap:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .infobox-image svg{opacity:.5;}
+  .infobox-realname{
+    text-align:center;padding:8px 10px;font-style:italic;color:var(--ink-soft);
+    border-bottom:1px solid var(--border-light);font-size:12.5px;
+  }
+  .infobox-row{
+    display:flex;border-bottom:1px solid var(--border-light);
+  }
+  .infobox-row:nth-child(even){background:var(--infobox-row-alt);}
+  .infobox-row .label{
+    width:38%;padding:6px 8px;font-weight:bold;color:var(--ink);flex:none;
+    border-right:1px solid var(--border-light);
+  }
+  .infobox-row .value{padding:6px 8px;color:var(--ink);}
+  .status-active{color:#14892c;font-weight:bold;}
+  .infobox-section-title{
+    background:#242830;font-weight:bold;padding:6px 8px;
+    border-bottom:1px solid var(--border-light);border-top:1px solid var(--border);
+  }
+  .hero-tags{display:flex;flex-wrap:wrap;gap:5px;padding:8px;}
+  .hero-tag{
+    background:#242830;border:1px solid var(--border-light);
+    padding:3px 8px;border-radius:3px;font-size:11.5px;
+  }
+
+  /* Article body */
+  .intro-para{margin-bottom:22px;font-size:14.5px;}
+  .intro-para b{font-weight:bold;}
+
+  h2.section-heading{
+    font-family:'Linux Libertine', Georgia, serif;font-weight:normal;
+    font-size:21px;border-bottom:1px solid var(--border-light);
+    padding-bottom:4px;margin:30px 0 12px;
+  }
+  h3.sub-heading{font-size:16px;margin:20px 0 8px;}
+
+  p{margin:0 0 14px;}
+
+  table.wikitable{
+    border-collapse:collapse;width:100%;margin:12px 0 20px;font-size:13px;
+  }
+  table.wikitable th{
+    background:#1c2024;border:1px solid var(--border);padding:7px 10px;text-align:left;
+  }
+  table.wikitable td{
+    border:1px solid var(--border-light);padding:7px 10px;
+  }
+  table.wikitable tr:nth-child(even){background:#1c2024;}
+  .tier-tag{
+    display:inline-block;padding:2px 7px;border-radius:3px;font-size:11px;font-weight:bold;
+  }
+  .tier-local{background:#3a3f44;color:#d0d3d6;}
+  .tier-school{background:#2a3d6b;color:#aecaff;}
+
+  ul.plain-list{margin:0 0 16px;padding-left:22px;}
+  ul.plain-list li{margin-bottom:5px;}
+
+  .trivia-box{
+    background:#1c2024;border:1px solid var(--border-light);border-left:3px solid var(--accent);
+    padding:12px 16px;margin:16px 0;font-size:13.5px;
+  }
+
+  .edit-note{
+    background:#332a10;border:1px solid #5c4a15;color:#e0c674;
+    padding:10px 14px;font-size:12.5px;margin-bottom:20px;border-radius:2px;
+  }
+
+  .references{font-size:12px;color:var(--ink-soft);margin-top:30px;padding-top:10px;border-top:1px solid var(--border-light);}
+
+  .categories-bar{
+    margin-top:40px;padding:10px 14px;background:#1c2024;border:1px solid var(--border-light);
+    font-size:12px;
+  }
+  .categories-bar b{margin-right:6px;}
+  .categories-bar a{margin-right:4px;}
+
+  @media(max-width:760px){
+    .infobox{float:none;width:100%;margin:0 0 20px;}
+    .page-wrap{padding:16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span>Liquipedia-style Profile <b>(fan-made, bukan situs resmi)</b></span>
+  <span>Dibuat: 2026</span>
+</div>
+
+<div class="page-wrap">
+
+  <div class="edit-note">
+    ✏️ Ini halaman gaya "Liquipedia" buatan pribadi, bukan halaman resmi Liquipedia — cocok buat lo pajang sebagai profil santai atau iseng-iseng. Tinggal edit teks di file HTML-nya sesuai kebutuhan.
+  </div>
+
+  <div class="page-title">kiooOway.</div>
+  <div class="page-subtitle">From a personal fan-made wiki profile</div>
+
+  <div class="content-grid">
+
+    <div class="infobox">
+      <div class="infobox-header">kiooOway.</div>
+      <div class="infobox-image">
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 8 1.34 8 4v2H4v-2c0-2.66 5.3-4 8-4zm0-10a4 4 0 110 8 4 4 0 010-8z"/></svg>
+        <span>No image available</span>
+      </div>
+      <div class="infobox-realname">Vincent Lie Ginansyah</div>
+
+      <div class="infobox-row"><div class="label">Nationality</div><div class="value">🇮🇩 Indonesia</div></div>
+      <div class="infobox-row"><div class="label">Born</div><div class="value">February 13, 2009 (age 17)</div></div>
+      <div class="infobox-row"><div class="label">Birthplace</div><div class="value">Cilacap, Indonesia</div></div>
+      <div class="infobox-row"><div class="label">Status</div><div class="value"><span class="status-active">● Active</span></div></div>
+      <div class="infobox-row"><div class="label">Role</div><div class="value">Gold Laner</div></div>
+      <div class="infobox-row"><div class="label">Team</div><div class="value">Syndicate Reign</div></div>
+
+      <div class="infobox-section-title">Signature Heroes</div>
+      <div class="hero-tags">
+        <span class="hero-tag">Granger</span>
+        <span class="hero-tag">Claude</span>
+        <span class="hero-tag">Moskov</span>
+        <span class="hero-tag">Natan</span>
+        <span class="hero-tag">Karrie</span>
+      </div>
+    </div>
+
+    <p class="intro-para">
+      Vincent <b>"kiooOway."</b> Lie Ginansyah (born February 13, 2009) is an Indonesian <i>Mobile Legends: Bang Bang</i> player currently playing as a <b>Gold Laner</b> for <b>Syndicate Reign</b>. Hailing from Cilacap, Indonesia, kiooOway. is known within his circle for his consistent farming pattern and hypercarry hero pool, most notably on marksman heroes such as Granger, Claude, Moskov, Natan, and Karrie.
+    </p>
+
+    <h2 class="section-heading">History</h2>
+    <p>
+      kiooOway. began playing <i>Mobile Legends: Bang Bang</i> in the Gold Laner role, gradually specializing in hypercarry marksman heroes. He currently competes under the squad name <b>Syndicate Reign</b>, primarily in casual and community-level matches ("mabar").
+    </p>
+
+    <h2 class="section-heading">Achievements</h2>
+    <table class="wikitable">
+      <tr>
+        <th>Tier</th>
+        <th>Placement</th>
+        <th>Tournament / Event</th>
+        <th>Team</th>
+        <th>Date</th>
+      </tr>
+      <tr>
+        <td><span class="tier-tag tier-school">School</span></td>
+        <td>1st Runner-Up</td>
+        <td>LKS Cyber Security — Kabupaten Bogor 2026</td>
+        <td>Individual</td>
+        <td>2026</td>
+      </tr>
+      <tr>
+        <td><span class="tier-tag tier-local">Community</span></td>
+        <td>TBD</td>
+        <td><i>— belum ada data turnamen MLBB, edit di sini —</i></td>
+        <td>Syndicate Reign</td>
+        <td>—</td>
+      </tr>
+    </table>
+
+    <div class="trivia-box">
+      <b>Trivia:</b> kiooOway. is also known off the Rift as a Computer Network Engineering (TKJ) student with a strong interest in cyber security, and is an active member of his school's badminton extracurricular club.
+    </div>
+
+    <h2 class="section-heading">Signature Heroes</h2>
+    <ul class="plain-list">
+      <li><b>Granger</b> — burst damage marksman, preferred for early-mid game skirmishes.</li>
+      <li><b>Claude</b> — mobility-based hypercarry with high late-game scaling.</li>
+      <li><b>Moskov</b> — poke and pick-off marksman with long-range true damage ultimate.</li>
+      <li><b>Natan</b> — hybrid marksman-mage with strong wave clear and burst potential.</li>
+      <li><b>Karrie</b> — true damage hypercarry, effective against tanky compositions.</li>
+    </ul>
+
+    <div class="references">
+      This is a fan-made, personal profile page inspired by the visual layout of Liquipedia. It is not affiliated with or endorsed by Liquipedia, Team Liquid, or Moonton.
+    </div>
+
+    <div class="categories-bar">
+      <b>Categories:</b>
+      <a href="#">2009 births</a>
+      <a href="#">Indonesian Players</a>
+      <a href="#">Gold Laner</a>
+      <a href="#">Active Players</a>
+      <a href="#">Syndicate Reign</a>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
