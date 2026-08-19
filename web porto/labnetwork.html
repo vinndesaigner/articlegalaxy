@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Network Lab - Project Preview</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f1ea;
+      color: #000;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .btn-back {
+      display: inline-block;
+      padding: 10px 18px;
+      background: #fff;
+      color: #000;
+      text-decoration: none;
+      font-weight: bold;
+      border: 3px solid #000;
+      box-shadow: 4px 4px 0px #000;
+      margin-bottom: 30px;
+      transition: all 0.2s;
+    }
+    .btn-back:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px #000;
+    }
+    .project-card {
+      background: #fff;
+      border: 4px solid #000;
+      box-shadow: 8px 8px 0px #000;
+      padding: 30px;
+      border-radius: 8px;
+    }
+    .tag {
+      display: inline-block;
+      background: #fb923c;
+      padding: 6px 12px;
+      font-weight: bold;
+      border: 2px solid #000;
+      margin-right: 8px;
+      margin-bottom: 15px;
+    }
+    .preview-img {
+      width: 100%;
+      height: auto;
+      border: 3px solid #000;
+      box-shadow: 6px 6px 0px #000;
+      border-radius: 6px;
+      margin-top: 15px;
+      margin-bottom: 10px;
+    }
+    .section-box {
+      background: #f8fafc;
+      border: 2px solid #000;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 6px;
+    }
+    .caption {
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 15px;
+    }
+    code {
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tombol Kembali ke Portofolio Utama -->
+  <a href="index.html" class="btn-back">← Back to Portfolio</a>
+
+  <div class="project-card">
+    <span class="tag">TKJ</span>
+    <span class="tag" style="background: #a7f3d0;">Debian Server</span>
+    <span class="tag" style="background: #38bdf8;">Tmux & Nginx</span>
+
+    <h1>Network Lab & Server Administration</h1>
+    <p>Hands-on networking and infrastructure deployment: Linux server administration, service management, system monitoring, and network configuration on Debian OS.</p>
+    
+    <hr style="border: 1px solid #000; margin: 20px 0;">
+
+    <!-- SECTION DEBIAN SERVER -->
+    <div class="section-box">
+      <h3>🖥️ Debian Server Deployment & Active Monitoring</h3>
+      <p>Multi-pane system administration workflow using <code>tmux</code>. Real-time resource tracking via <code>htop</code>, system specifications via <code>fastfetch</code>, and Nginx reverse proxy service status verification.</p>
+      
+      <!-- File Screenshot Debian kamu -->
+      <img src="adminsys.png".png" alt="Debian Server Tmux & Nginx Active Status" class="preview-img">
+      <p class="caption"><i>Figure: Debian GNU/Linux 13 (Trixie) server dashboard with active Nginx service & real-time resource monitor.</i></p>
+    </div>
+  </div>
+
+</body>
+</html>
